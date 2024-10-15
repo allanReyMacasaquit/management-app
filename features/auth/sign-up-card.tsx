@@ -140,7 +140,7 @@ function SignUpCard() {
 								</FormItem>
 							)}
 						/>
-						<div className='w-full mx-auto py-4'>
+						<div className='w-full mx-auto md:py-4'>
 							<Button type='submit' onClick={() => onSubmit} variant='primary'>
 								Sign Up
 							</Button>

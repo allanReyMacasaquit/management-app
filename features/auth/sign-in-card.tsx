@@ -104,7 +104,7 @@ function SignInCard() {
 								</FormItem>
 							)}
 						/>
-						<div className='w-full mx-auto py-4'>
+						<div className='w-full mx-auto md:py-4'>
 							<Button variant='primary'>Login</Button>
 						</div>
 					</form>
