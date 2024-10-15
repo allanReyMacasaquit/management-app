@@ -2,7 +2,7 @@
 function DottedSeparator() {
 	return (
 		<div
-			className='max-w-xl mx-auto h-2 mb-8'
+			className='max-w-xl mx-auto h-2 mb-4 md:mb-8'
 			style={{
 				backgroundImage:
 					'radial-gradient(circle, #cccccc 1px, transparent 6px)',
