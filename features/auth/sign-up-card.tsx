@@ -148,6 +148,19 @@ function SignUpCard() {
 					</form>
 				</Form>
 			</CardContent>
+			<DottedSeparator />
+			<CardContent className='flex items-center justify-center'>
+				<div className='flex flex-col text-center items-center'>
+					Already have an account?
+					<Link href='/sign-in'>
+						<div className='text-blue-700'>
+							<div className='hover:text-blue-900 hover:underline underline-offset-4'>
+								LogIn here
+							</div>
+						</div>
+					</Link>
+				</div>
+			</CardContent>
 		</Card>
 	);
 }

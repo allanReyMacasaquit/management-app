@@ -16,6 +16,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import Link from 'next/link';
 
 const formSchema = z.object({
 	email: z.string().email({ message: 'Required *' }),
@@ -108,6 +109,19 @@ function SignInCard() {
 						</div>
 					</form>
 				</Form>
+			</CardContent>
+			<DottedSeparator />
+			<CardContent className='flex items-center justify-center'>
+				<div className='flex flex-col text-center items-center'>
+					Don't have an account?
+					<Link href='/sign-up'>
+						<div className='text-blue-700'>
+							<div className='hover:text-blue-900 hover:underline underline-offset-4'>
+								Sign Up
+							</div>
+						</div>
+					</Link>
+				</div>
 			</CardContent>
 		</Card>
 	);
