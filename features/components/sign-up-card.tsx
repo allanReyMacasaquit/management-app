@@ -2,9 +2,14 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import DottedSeparator from '@/features/auth/components/dotted-separator';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import Image from 'next/image';
@@ -17,19 +22,25 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
-import { loginSchema } from '../../schemas';
+import DottedSeparator from './dotted-separator';
 
-function SignInCard() {
-	const form = useForm<z.infer<typeof loginSchema>>({
-		resolver: zodResolver(loginSchema),
+const formSchema = z.object({
+	name: z.string().trim().min(2, 'Required *'),
+	email: z.string().email({ message: 'Required *' }),
+	password: z.string().min(2, 'Required *'),
+});
+function SignUpCard() {
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
 		defaultValues: {
+			name: '',
 			email: '',
 			password: '',
 		},
 	});
 
-	const onSubmit = (values: z.infer<typeof loginSchema>) => {
-		console.log({ values });
+	const onSubmit = (values: z.infer<typeof formSchema>) => {
+		console.log(values);
 	};
 
 	return (
@@ -45,19 +56,30 @@ function SignInCard() {
 					/>
 					<div className='ml-2'>Church Managenent</div>
 				</CardTitle>
-				<div className='text-xl'>Welcome!</div>
+				<div className='text-xl'>Join us today!</div>
+				<CardDescription className='items-center text-center italic'>
+					By signing up, you agree to our {''}
+					<Link href='/privacy'>
+						<span className='text-blue-600'>Privacy Policy</span>
+					</Link>{' '}
+					{''}
+					and {''}
+					<Link href='/terms'>
+						<span className='text-blue-600'>Terms of Services.</span>
+					</Link>
+				</CardDescription>
 			</CardHeader>
 			<DottedSeparator />
 			<div className='max-w-96 mx-auto px-6 pb-2 md:pb-6'>
 				<Button variant='google' size='sm'>
 					<FcGoogle className='mr-2' size={20} />
-					Login with Google
+					Sign up with Google
 				</Button>
 			</div>
 			<div className='max-w-96 mx-auto px-6 pb-2 md:pb-6'>
 				<Button variant='github' size='sm'>
 					<FaGithub className='mr-2' size={20} />
-					Login with Github
+					Sign up with Github
 				</Button>
 			</div>
 			<DottedSeparator />
@@ -68,6 +90,23 @@ function SignInCard() {
 						className='flex flex-col space-y-2'
 					>
 						<FormField
+							name='name'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormControl>
+										<Input
+											type='name'
+											placeholder='Enter name'
+											{...field}
+											className='p-2'
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
 							name='email'
 							control={form.control}
 							render={({ field }) => (
@@ -75,7 +114,7 @@ function SignInCard() {
 									<FormControl>
 										<Input
 											type='email'
-											placeholder='Email Address'
+											placeholder='Enter Email Address'
 											{...field}
 											className='p-2'
 										/>
@@ -92,7 +131,7 @@ function SignInCard() {
 									<FormControl>
 										<Input
 											type='password'
-											placeholder='Password'
+											placeholder='Enter Password'
 											{...field}
 											className='p-2'
 										/>
@@ -102,7 +141,9 @@ function SignInCard() {
 							)}
 						/>
 						<div className='w-full mx-auto md:py-4'>
-							<Button variant='primary'>Login</Button>
+							<Button type='submit' onClick={() => onSubmit} variant='primary'>
+								Sign Up
+							</Button>
 						</div>
 					</form>
 				</Form>
@@ -110,11 +151,11 @@ function SignInCard() {
 			<DottedSeparator />
 			<CardContent className='flex items-center justify-center'>
 				<div className='flex flex-col text-center items-center'>
-					Don't have an account?
-					<Link href='/sign-up'>
+					Already have an account?
+					<Link href='/sign-in'>
 						<div className='text-blue-700'>
 							<div className='hover:text-blue-900 hover:underline underline-offset-4'>
-								Sign Up
+								LogIn here
 							</div>
 						</div>
 					</Link>
@@ -123,4 +164,4 @@ function SignInCard() {
 		</Card>
 	);
 }
-export default SignInCard;
+export default SignUpCard;
