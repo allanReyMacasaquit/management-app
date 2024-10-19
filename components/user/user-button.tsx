@@ -14,7 +14,7 @@ import { useLogout } from '@/hooks/use-logout';
 
 function UserButton() {
 	const { data: user, isLoading } = useCurrent();
-	const { mutate: logout } = useLogout();
+	const { mutate: logout, isPending } = useLogout();
 
 	if (isLoading) {
 		return (
@@ -77,7 +77,7 @@ function UserButton() {
 					className='h-10 flex items-center justify-center text-amber-700 font-medium cursor-pointer'
 				>
 					<LogOut className='size-4 mr-2' />
-					Log out
+					{isPending ? <Loader className='size-4 animate-spin' /> : 'Log out'}
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

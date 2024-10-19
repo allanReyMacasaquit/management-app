@@ -1,3 +1,5 @@
+'use client';
+
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,9 +21,10 @@ import Link from 'next/link';
 import { loginSchema } from '../schemas';
 import DottedSeparator from './dotted-separator';
 import { useLogin } from '@/hooks/use-login';
+import { Loader } from 'lucide-react';
 
 function SignInCard() {
-	const { mutate } = useLogin();
+	const { mutate, isPending } = useLogin();
 
 	const form = useForm<z.infer<typeof loginSchema>>({
 		resolver: zodResolver(loginSchema),
@@ -54,13 +57,13 @@ function SignInCard() {
 			</CardHeader>
 			<DottedSeparator />
 			<div className='max-w-96 mx-auto px-6 pb-2 md:pb-6'>
-				<Button variant='google' size='sm'>
+				<Button disabled={isPending} variant='google' size='sm'>
 					<FcGoogle className='mr-2' size={20} />
 					Login with Google
 				</Button>
 			</div>
 			<div className='max-w-96 mx-auto px-6 pb-2 md:pb-6'>
-				<Button variant='github' size='sm'>
+				<Button disabled={isPending} variant='github' size='sm'>
 					<FaGithub className='mr-2' size={20} />
 					Login with Github
 				</Button>
@@ -107,7 +110,13 @@ function SignInCard() {
 							)}
 						/>
 						<div className='w-full mx-auto md:py-4'>
-							<Button variant='primary'>Login</Button>
+							<Button disabled={isPending} variant='primary'>
+								{isPending ? (
+									<Loader className='size-6 animate-spin' />
+								) : (
+									'Login'
+								)}
+							</Button>
 						</div>
 					</form>
 				</Form>
@@ -115,11 +124,11 @@ function SignInCard() {
 			<DottedSeparator />
 			<CardContent className='flex items-center justify-center'>
 				<div className='flex flex-col text-center items-center'>
-					Don@apos;t have an account?
+					Don&apos;t have an account?
 					<Link href='/sign-up'>
 						<div className='text-blue-700'>
 							<div className='hover:text-blue-900 hover:underline underline-offset-4'>
-								Sign Up
+								Register
 							</div>
 						</div>
 					</Link>

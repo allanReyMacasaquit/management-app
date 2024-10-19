@@ -19,7 +19,7 @@ function Header() {
 			{/* Use Link to wrap the Button for better accessibility */}
 			<Link href={isSignIn ? '/sign-up' : '/sign-in'}>
 				<Button variant='primary' size='sm' className='w-28'>
-					{isSignIn ? 'Sign Up' : 'Log In'}
+					{isSignIn ? 'Register' : 'Log In'}
 				</Button>
 			</Link>
 		</nav>

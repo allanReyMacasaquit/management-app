@@ -1,3 +1,5 @@
+'use client';
+
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,9 +27,10 @@ import Link from 'next/link';
 import DottedSeparator from './dotted-separator';
 import { registerSchema } from '../schemas';
 import { useRegister } from '@/hooks/use-register';
+import { Loader } from 'lucide-react';
 
 function SignUpCard() {
-	const { mutate } = useRegister();
+	const { mutate, isPending } = useRegister();
 	const form = useForm<z.infer<typeof registerSchema>>({
 		resolver: zodResolver(registerSchema),
 		defaultValues: {
@@ -69,13 +72,13 @@ function SignUpCard() {
 			</CardHeader>
 			<DottedSeparator />
 			<div className='max-w-96 mx-auto px-6 pb-2 md:pb-6'>
-				<Button variant='google' size='sm'>
+				<Button disabled={isPending} variant='google' size='sm'>
 					<FcGoogle className='mr-2' size={20} />
 					Sign up with Google
 				</Button>
 			</div>
 			<div className='max-w-96 mx-auto px-6 pb-2 md:pb-6'>
-				<Button variant='github' size='sm'>
+				<Button disabled={isPending} variant='github' size='sm'>
 					<FaGithub className='mr-2' size={20} />
 					Sign up with Github
 				</Button>
@@ -139,8 +142,17 @@ function SignUpCard() {
 							)}
 						/>
 						<div className='w-full mx-auto md:py-4'>
-							<Button type='submit' onClick={() => onSubmit} variant='primary'>
-								Sign Up
+							<Button
+								disabled={isPending}
+								type='submit'
+								onClick={() => onSubmit}
+								variant='primary'
+							>
+								{isPending ? (
+									<Loader className='size-6 animate-spin' />
+								) : (
+									'Register'
+								)}
 							</Button>
 						</div>
 					</form>
