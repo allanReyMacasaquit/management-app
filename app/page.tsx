@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import UserButton from '@/components/user/user-button';
 import { useCurrent } from '@/hooks/use-current';
 import { useLogout } from '@/hooks/use-logout';
 import { useRouter } from 'next/navigation';
@@ -19,10 +19,7 @@ function HomePage() {
 
 	return (
 		<div>
-			Only visible to authorized users.
-			<Button variant='primary' onClick={() => mutate()}>
-				Log out
-			</Button>
+			<UserButton />
 		</div>
 	);
 }
