@@ -15,8 +15,8 @@ function Sidebar() {
 					priority
 				/>
 				<Separator className='mt-4' />
-				<Navigation />
 			</Link>
+			<Navigation />
 		</aside>
 	);
 }

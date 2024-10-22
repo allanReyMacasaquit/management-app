@@ -1,10 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import { routes } from './links';
 import { cn } from '@/lib/utils';
 
 function Navigation() {
 	return (
-		<ul className='flex flex-col'>
+		<div className='flex flex-col'>
 			{routes.map(({ label, href, icon, activeIcon }) => {
 				const isActive = false;
 				const Icon = isActive ? activeIcon : icon;
@@ -22,7 +24,7 @@ function Navigation() {
 					</Link>
 				);
 			})}
-		</ul>
+		</div>
 	);
 }
 export default Navigation;
