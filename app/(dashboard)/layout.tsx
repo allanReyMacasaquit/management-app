@@ -15,7 +15,9 @@ function Dashboardlayout({ children }: DashboardlayoutProps) {
 				<div className='lg:pl-60 w-full'>
 					<div className='mx-auto max-w-screen-2xl h-full'>
 						<Navbar />
-						<main className='h-full p-6 flex flex-col'>{children}</main>
+						<main className='min-h-screen sm:p-6 flex flex-col'>
+							{children}
+						</main>
 					</div>
 				</div>
 			</div>

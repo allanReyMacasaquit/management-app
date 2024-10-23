@@ -12,7 +12,7 @@ const buttonVariants = cva(
 				primary:
 					'bg-green-500 w-full text-primary-foreground shadow hover:bg-green-500/90 text-xl tracking-widest border-green-700 active:border-green-500 border-b-2 active:border-b-0',
 				secondary:
-					'bg-blue-500 w-full text-primary-foreground shadow hover:bg-blue-500/90 text-xl tracking-widest border-blue-700 active:border-blue-500 border-b-2 active:border-b-0',
+					'bg-blue-500 text-primary-foreground shadow hover:bg-blue-500/90 text-xl tracking-widest border-blue-700 active:border-blue-500 border-b-2 active:border-b-0',
 				default:
 					'bg-primary text-primary-foreground shadow hover:bg-primary/90',
 				destructive:

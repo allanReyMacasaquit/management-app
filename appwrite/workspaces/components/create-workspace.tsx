@@ -16,13 +16,17 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useWorkspaces } from '../hooks/use-workspaces';
-import { Loader } from 'lucide-react';
+import { ImageIcon, Loader } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import Image from 'next/image';
 
 interface CreateWorkspaceFormProps {
 	onCancel?: () => void;
 }
 
 function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
+	const inputRef = useRef<HTMLInputElement>(null);
 	const { mutate, isPending } = useWorkspaces();
 	const form = useForm<z.infer<typeof workspacesSchema>>({
 		resolver: zodResolver(workspacesSchema),
@@ -31,13 +35,34 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 		},
 	});
 
+	// State to manage the image file and its preview
+	const [imageFile, setImageFile] = useState<File | undefined>(undefined);
+	const [imagePreview, setImagePreview] = useState<string | undefined>(
+		undefined
+	);
+
 	// Submit handler for the form
-	const onSubmit = (values: z.infer<typeof workspacesSchema>) => {
-		mutate({ json: values });
+	const onSubmit = async (values: z.infer<typeof workspacesSchema>) => {
+		// Prepare the final form values
+		const finalValues = {
+			...values,
+			image: imageFile, // Send the image file to the backend
+		};
+
+		// Call the mutate function to trigger the upload
+		mutate({ form: finalValues });
+	};
+
+	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (file) {
+			setImageFile(file);
+			setImagePreview(URL.createObjectURL(file)); // Create a preview for the selected image
+		}
 	};
 
 	return (
-		<Card className='w-full h-full border-none shadow-none'>
+		<Card className='w-full h-full'>
 			<CardHeader className='flex'>
 				<CardTitle className='text-2xl font-bold'>
 					Create a new workspace
@@ -62,23 +87,79 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 								</FormItem>
 							)}
 						/>
-						<div className='flex items-center justify-between'>
+						<DottedSeparator />
+						{/* Remove the unused field from image input */}
+						<div className='size-64 relative rounded-md overflow-hidden py-4'>
+							<div className='flex flex-col gap-y-2'>
+								<div className='flex items-center gap-x-5'>
+									{imagePreview ? (
+										<div>
+											<Image
+												src={imagePreview}
+												alt='image'
+												fill
+												className='object-cover'
+											/>
+										</div>
+									) : (
+										<Avatar className='size-16'>
+											<AvatarFallback>
+												<ImageIcon className='size-9' />
+											</AvatarFallback>
+										</Avatar>
+									)}
+									<div className='flex flex-col px-8'>
+										<p className='text-sm'>Workplace Icon</p>
+										<p className='text-xs text-muted-foreground'>
+											JPG, PNG, SVG, or JPEG, Max 1MB.
+										</p>
+										<input
+											type='file'
+											accept='.jpeg, .png, .svg, .jpg'
+											className='hidden'
+											ref={inputRef}
+											disabled={isPending}
+											onChange={handleImageChange}
+										/>
+										<Button
+											type='button'
+											variant='outline'
+											disabled={isPending}
+											size='sm'
+											className='w-fit mt-4'
+											onClick={() => inputRef.current?.click()}
+										>
+											Upload Image
+										</Button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className='flex items-center justify-between space-x-2'>
 							<Button
-								variant='primary'
+								variant='secondary'
 								disabled={isPending}
 								type='submit'
 								className='mt-4'
 							>
-								{isPending ? <Loader size={4} /> : 'Create Workspace'}
+								{isPending ? (
+									<Loader size={20} className='text-white animate-spin' />
+								) : (
+									'Create Workspace'
+								)}
 							</Button>
 							<Button
 								disabled={isPending}
 								type='button'
 								variant='destructive'
 								onClick={onCancel}
-								className='mt-4 ml-2'
+								className='mt-4'
 							>
-								{isPending ? <Loader size={4} /> : 'Cancel'}
+								{isPending ? (
+									<Loader size={20} className='text-white animate-spin' />
+								) : (
+									'Cancel'
+								)}
 							</Button>
 						</div>
 					</form>
