@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Separator } from '../ui/separator';
 import Navigation from '../navigation/navigation';
+import WorkspaceSwitcher from '@/appwrite/workspaces/components/workspace-switcher';
 
 function Sidebar() {
 	return (
@@ -14,6 +15,8 @@ function Sidebar() {
 					width={50}
 					priority
 				/>
+				<Separator className='mt-4' />
+				<WorkspaceSwitcher />
 				<Separator className='mt-4' />
 			</Link>
 			<Navigation />

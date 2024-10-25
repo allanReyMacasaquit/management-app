@@ -15,11 +15,11 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useWorkspaces } from '../hooks/use-workspaces';
 import { ImageIcon, Loader } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Image from 'next/image';
+import { useCreateWorkspaces } from '../hooks/use-create-workspaces';
 
 interface CreateWorkspaceFormProps {
 	onCancel?: () => void;
@@ -27,7 +27,7 @@ interface CreateWorkspaceFormProps {
 
 function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const { mutate, isPending } = useWorkspaces();
+	const { mutate, isPending } = useCreateWorkspaces();
 	const form = useForm<z.infer<typeof workspacesSchema>>({
 		resolver: zodResolver(workspacesSchema),
 		defaultValues: {
@@ -37,9 +37,7 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 
 	// State to manage the image file and its preview
 	const [imageFile, setImageFile] = useState<File | undefined>(undefined);
-	const [imagePreview, setImagePreview] = useState<string | undefined>(
-		undefined
-	);
+	const [imagePreview, setImagePreview] = useState<string | null>(null);
 
 	// Submit handler for the form
 	const onSubmit = async (values: z.infer<typeof workspacesSchema>) => {
@@ -87,7 +85,7 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 								</FormItem>
 							)}
 						/>
-						<DottedSeparator />
+
 						{/* Remove the unused field from image input */}
 						<div className='size-64 relative rounded-md overflow-hidden py-4'>
 							<div className='flex flex-col gap-y-2'>
@@ -97,7 +95,8 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 											<Image
 												src={imagePreview}
 												alt='image'
-												fill
+												height={100}
+												width={100}
 												className='object-cover'
 											/>
 										</div>
@@ -111,7 +110,7 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 									<div className='flex flex-col px-8'>
 										<p className='text-sm'>Workplace Icon</p>
 										<p className='text-xs text-muted-foreground'>
-											JPG, PNG, SVG, or JPEG, Max 1MB.
+											JPG, PNG,or JPEG, Max 5MB.
 										</p>
 										<input
 											type='file'

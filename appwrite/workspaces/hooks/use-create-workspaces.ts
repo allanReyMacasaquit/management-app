@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 type ResponseType = InferResponseType<typeof client.api.workspaces.$post>;
 type RequestType = InferRequestType<typeof client.api.workspaces.$post>;
 
-export const useWorkspaces = () => {
+export const useCreateWorkspaces = () => {
 	const queryClient = useQueryClient();
 	const mutation = useMutation<ResponseType, Error, RequestType>({
 		mutationFn: async ({ form }) => {
