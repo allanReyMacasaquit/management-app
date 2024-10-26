@@ -20,6 +20,7 @@ import { useRef, useState } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Image from 'next/image';
 import { useCreateWorkspaces } from '../hooks/use-create-workspaces';
+import { useRouter } from 'next/navigation';
 
 interface CreateWorkspaceFormProps {
 	onCancel?: () => void;
@@ -35,6 +36,8 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 		},
 	});
 
+	const router = useRouter();
+
 	// State to manage the image file and its preview
 	const [imageFile, setImageFile] = useState<File | undefined>(undefined);
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -48,7 +51,15 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 		};
 
 		// Call the mutate function to trigger the upload
-		mutate({ form: finalValues });
+		mutate(
+			{ form: finalValues },
+			{
+				onSuccess: ({ data }) => {
+					form.reset();
+					router.push(`/workspaces/${data.$id}`);
+				},
+			}
+		);
 	};
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +71,7 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 	};
 
 	return (
-		<Card className='w-full h-full'>
+		<Card className='w-full h-full shadow-none border-none'>
 			<CardHeader className='flex'>
 				<CardTitle className='text-2xl font-bold'>
 					Create a new workspace

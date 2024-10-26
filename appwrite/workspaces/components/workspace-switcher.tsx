@@ -10,18 +10,31 @@ import {
 import { useGetWorkspaces } from '../hooks/use-get-workspaces';
 import { RiAddCircleFill } from 'react-icons/ri';
 import WorkspaceAvatar from './workspace-avatar';
+import { useRouter } from 'next/navigation';
+import { useWorkspaceId } from '../hooks/use-workspace-id';
+import useCreateWorkspaceModal from '../hooks/use-create-workspace-modal';
 
 function WorkspaceSwitcher() {
+	const workspaceId = useWorkspaceId();
+	const router = useRouter();
 	const { data: workspaces } = useGetWorkspaces();
+	const { open } = useCreateWorkspaceModal();
+
+	const onSelect = (id: string) => {
+		router.push(`/workspaces/${id}`);
+	};
 	return (
 		<div className='flex flex-col'>
 			<div className='flex items-center justify-between p-4 border rounded-xl mt-4'>
 				<p>Workspace</p>
-				<RiAddCircleFill className='size-6 text-neutral-500 hover ' />
+				<RiAddCircleFill
+					onClick={open}
+					className='size-6 text-neutral-500 hover '
+				/>
 			</div>
 
 			<div className='mt-2'>
-				<Select>
+				<Select onValueChange={onSelect} value={workspaceId}>
 					<SelectTrigger className='w-full'>
 						<SelectValue placeholder='No workspace selected' />
 					</SelectTrigger>

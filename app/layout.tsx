@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { QueryProvider } from '@/app/query-provider';
 import { Toaster } from '@/components/ui/sonner';
+import { NuqsAdapter } from 'nuqs/adapters/next';
 
 const geistSans = localFont({
 	src: './fonts/GeistVF.woff',
@@ -30,8 +31,11 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<Toaster position='top-right' />
-				<QueryProvider>{children}</QueryProvider>
+				<NuqsAdapter>
+					<Toaster position='top-right' />
+
+					<QueryProvider>{children}</QueryProvider>
+				</NuqsAdapter>
 			</body>
 		</html>
 	);

@@ -1,3 +1,4 @@
+import CreateWorkspaceModal from '@/appwrite/workspaces/components/create-workspace-modal';
 import Navbar from '@/components/navbar/navbar';
 import Sidebar from '@/components/sidebar/sidebar';
 import React from 'react';
@@ -8,6 +9,7 @@ interface DashboardlayoutProps {
 function Dashboardlayout({ children }: DashboardlayoutProps) {
 	return (
 		<div className='min-h-screen'>
+			<CreateWorkspaceModal />
 			<div className='flex w-full h-full'>
 				<div className='fixed left-0 top-0 hidden lg:block lg:w-60 h-full overflow-y-auto'>
 					<Sidebar />

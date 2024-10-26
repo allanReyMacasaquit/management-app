@@ -10,6 +10,7 @@ import {
 } from '@/appwrite/config';
 import { ID, Query } from 'node-appwrite';
 import { Role } from '@/appwrite/members/types';
+import { generateInviteCode } from '@/lib/utils';
 
 const app = new Hono()
 	.get('/', sessionMiddleware, async (c) => {
@@ -71,6 +72,7 @@ const app = new Hono()
 					name,
 					userId: user.$id,
 					imageUrl: uploadedImageUrl,
+					inviteCode: generateInviteCode(6),
 				}
 			);
 
