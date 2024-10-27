@@ -1,3 +1,4 @@
+'use client';
 import { client } from '@/lib/hono-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';

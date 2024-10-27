@@ -1,6 +1,6 @@
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
-import { workspacesSchema } from '../schemas';
+import { createWorkspacesSchema, updateWorkspacesSchema } from '../schemas';
 import { sessionMiddleware } from '@/middleware/session';
 import {
 	DATABASE_ID,
@@ -11,6 +11,7 @@ import {
 import { ID, Query } from 'node-appwrite';
 import { Role } from '@/appwrite/members/types';
 import { generateInviteCode } from '@/lib/utils';
+import { getMember } from '@/appwrite/members/utils';
 
 const app = new Hono()
 	.get('/', sessionMiddleware, async (c) => {
@@ -36,7 +37,7 @@ const app = new Hono()
 	})
 	.post(
 		'/',
-		zValidator('form', workspacesSchema),
+		zValidator('form', createWorkspacesSchema),
 		sessionMiddleware,
 		async (c) => {
 			const databases = c.get('databases');
@@ -83,5 +84,60 @@ const app = new Hono()
 			});
 			return c.json({ data: workspace });
 		}
+	)
+	.patch(
+		'/:workspaceId',
+		sessionMiddleware,
+		zValidator('form', updateWorkspacesSchema),
+		async (c) => {
+			const databases = c.get('databases');
+			const storage = c.get('storage');
+			const user = c.get('user');
+
+			const { workspaceId } = c.req.param();
+			const { name, image } = c.req.valid('form');
+
+			// Ensure the user is an admin of the workspace
+			const member = await getMember({
+				databases,
+				workspaceId,
+				userId: user.$id,
+			});
+			if (!member || member.role !== Role.admin) {
+				return c.json({ error: 'Unauthorized' }, 401);
+			}
+
+			let uploadedImageUrl: string | undefined;
+
+			// Only handle image upload if a new image is provided
+			if (image instanceof File) {
+				const file = await storage.createFile(
+					STORAGE_BUCKET_ID,
+					ID.unique(),
+					image
+				);
+				const arrayBuffer = await storage.getFilePreview(
+					STORAGE_BUCKET_ID,
+					file.$id
+				);
+				uploadedImageUrl = `data:image/png;base64,${Buffer.from(
+					arrayBuffer
+				).toString('base64')}`;
+			}
+
+			// Update the workspace document, including the new image URL if provided
+			const workspace = await databases.updateDocument(
+				DATABASE_ID,
+				WORKSPACES_ID,
+				workspaceId,
+				{
+					name,
+					...(uploadedImageUrl ? { imageUrl: uploadedImageUrl } : {}),
+				}
+			);
+
+			return c.json({ data: workspace });
+		}
 	);
+
 export default app;

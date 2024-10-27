@@ -1,4 +1,5 @@
 'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -13,26 +14,33 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ImageIcon, Loader } from 'lucide-react';
+import { ArrowLeftIcon, ImageIcon, Loader } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Image from 'next/image';
-import { useCreateWorkspaces } from '../hooks/use-create-workspaces';
-import { useRouter } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { createWorkspacesSchema } from '../schemas';
 
-interface CreateWorkspaceFormProps {
+import { useRouter } from 'next/navigation';
+import { updateWorkspacesSchema } from '../schemas';
+import { Workspace } from '../types';
+import { useUpdateWorkspaces } from '../hooks/use-update-workspaces';
+
+interface EditWorkspaceFormProps {
 	onCancel?: () => void;
+	initialValues: Workspace;
 }
 
-function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
+function EditWorkspaceForm({
+	onCancel,
+	initialValues,
+}: EditWorkspaceFormProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const { mutate, isPending } = useCreateWorkspaces();
-	const form = useForm<z.infer<typeof createWorkspacesSchema>>({
-		resolver: zodResolver(createWorkspacesSchema),
+	const { mutate, isPending } = useUpdateWorkspaces();
+
+	const form = useForm<z.infer<typeof updateWorkspacesSchema>>({
+		resolver: zodResolver(updateWorkspacesSchema),
 		defaultValues: {
-			name: '',
+			...initialValues,
+			image: initialValues.imageUrl ?? '',
 		},
 	});
 
@@ -43,7 +51,7 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
 
 	// Submit handler for the form
-	const onSubmit = async (values: z.infer<typeof createWorkspacesSchema>) => {
+	const onSubmit = async (values: z.infer<typeof updateWorkspacesSchema>) => {
 		// Prepare the final form values
 		const finalValues = {
 			...values,
@@ -52,7 +60,8 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 
 		// Call the mutate function to trigger the upload
 		mutate(
-			{ form: finalValues },
+			{ form: finalValues, param: { workspaceId: initialValues.$id } },
+
 			{
 				onSuccess: ({ data }) => {
 					form.reset();
@@ -71,9 +80,20 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 	};
 
 	return (
-		<Card className='w-full h-full shadow-none border-none'>
-			<CardHeader className='flex'>
-				<CardTitle className='text-2xl'>Create a new workspace</CardTitle>
+		<Card>
+			<CardHeader className='flex flex-row items-center gap-x-4 justify-between '>
+				<Button
+					onClick={
+						onCancel
+							? onCancel
+							: () => router.push(`/workspaces/${initialValues.$id}`)
+					}
+					variant='outline'
+				>
+					<ArrowLeftIcon size={14} />
+					Back
+				</Button>
+				<CardTitle className='text-2xl'>{initialValues.name}</CardTitle>
 			</CardHeader>
 			<DottedSeparator />
 			<CardContent>
@@ -85,7 +105,11 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 							render={({ field, fieldState }) => (
 								<FormItem>
 									<FormControl>
-										<Input {...field} placeholder='Enter workspace name' />
+										<Input
+											{...field}
+											placeholder='Enter workspace name'
+											className='mb-4'
+										/>
 									</FormControl>
 									{/* Show error message if validation fails */}
 									{fieldState.error && (
@@ -162,22 +186,13 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 								</div>
 							</div>
 						</div>
-						<div className='flex items-center justify-between space-x-2'>
+						<div className='flex items-center justify-between space-x-2 mt-4'>
 							<Button variant='secondary' disabled={isPending} type='submit'>
 								{isPending ? (
 									<Loader size={20} className='text-white animate-spin' />
 								) : (
-									'Create Workspace'
+									'Save changes'
 								)}
-							</Button>
-							<Button
-								disabled={isPending}
-								type='button'
-								variant='destructive'
-								onClick={onCancel}
-								className={cn(!onCancel && 'invisible')}
-							>
-								Cancel
 							</Button>
 						</div>
 					</form>
@@ -187,4 +202,4 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 	);
 }
 
-export default CreateWorkspaceForm;
+export default EditWorkspaceForm;
