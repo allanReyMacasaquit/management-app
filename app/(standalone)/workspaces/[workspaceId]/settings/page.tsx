@@ -23,7 +23,7 @@ async function WorkspaceIdSettingsPage({
 		redirect(`/workspaces/${params.workspaceId}`);
 	}
 	return (
-		<div className='w-full lg:max-w-2xl'>
+		<div className='w-full lg:max-w-2xl mt-20'>
 			<EditWorkspaceForm initialValues={initialValues} />
 		</div>
 	);

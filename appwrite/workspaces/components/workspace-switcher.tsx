@@ -23,6 +23,7 @@ function WorkspaceSwitcher() {
 	const onSelect = (id: string) => {
 		router.push(`/workspaces/${id}`);
 	};
+
 	return (
 		<div className='flex flex-col'>
 			<div className='flex items-center justify-between p-4 border rounded-xl mt-4'>
@@ -39,14 +40,11 @@ function WorkspaceSwitcher() {
 						<SelectValue placeholder='No workspace selected' />
 					</SelectTrigger>
 					<SelectContent>
-						{workspaces?.documents.map((workspace) => (
-							<SelectItem key={workspace.$id} value={workspace.$id}>
+						{workspaces?.documents.map(({ $id, name, imageUrl }) => (
+							<SelectItem key={$id} value={$id}>
 								<div className='flex items-center justify-start gap-3 font font-medium'>
-									<WorkspaceAvatar
-										name={workspace.name}
-										image={workspace.imageUrl}
-									/>
-									<p className='ml-2 truncate'>{workspace.name}</p>
+									<WorkspaceAvatar name={name} image={imageUrl} />
+									<p className='ml-2 truncate'>{name}</p>
 								</div>
 							</SelectItem>
 						))}
