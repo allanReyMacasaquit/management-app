@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ArrowLeftIcon, ImageIcon, Loader } from 'lucide-react';
+import { ArrowLeftIcon, CopyIcon, ImageIcon, Loader } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Image from 'next/image';
@@ -25,6 +25,8 @@ import { Workspace } from '../types';
 import { useUpdateWorkspaces } from '../hooks/use-update-workspaces';
 import { useConfirm } from '@/components/user/use-confirm';
 import { useDeleteWorkspaces } from '../hooks/use-delete-workspaces';
+import { toast } from 'sonner';
+import { useResetInviteCode } from '../hooks/use-reset-invite-code';
 
 interface EditWorkspaceFormProps {
 	onCancel?: () => void;
@@ -38,14 +40,23 @@ function EditWorkspaceForm({
 	const inputRef = useRef<HTMLInputElement>(null);
 	const { mutate, isPending } = useUpdateWorkspaces();
 
+	const { mutate: deleteWorkspace, isPending: isDeletingWorkspace } =
+		useDeleteWorkspaces();
+
+	const { mutate: resetInviteCode, isPending: isResettingCode } =
+		useResetInviteCode();
+
 	const [DeleteDialog, confirmDelete] = useConfirm(
 		'Delete Workspace',
 		'The action cannot be undone',
 		'destructive'
 	);
 
-	const { mutate: deleteWorkspace, isPending: isDeletingWorkspace } =
-		useDeleteWorkspaces();
+	const [ResetDialog, confirmReset] = useConfirm(
+		'Reset invite Code ',
+		'This will invalidate the current invite link',
+		'destructive'
+	);
 
 	const form = useForm<z.infer<typeof updateWorkspacesSchema>>({
 		resolver: zodResolver(updateWorkspacesSchema),
@@ -115,9 +126,40 @@ function EditWorkspaceForm({
 		);
 	};
 
+	const handleResetInviteCode = async () => {
+		const ok = await confirmReset();
+		if (!ok) return;
+		resetInviteCode(
+			{
+				param: { workspaceId: initialValues.$id },
+			},
+			{
+				onSuccess: () => {
+					router.refresh();
+				},
+				onError: (error) => {
+					// Handle error
+					console.error('Error Resetting Invite Code:', error);
+					alert('Error Resetting Invite Code. Please try again.');
+				},
+			}
+		);
+	};
+	let fullInviteLink = '';
+	if (typeof window !== 'undefined') {
+		fullInviteLink = `${window.location.origin}/workspaces/${initialValues.$id}/join/${initialValues.inviteCode}`;
+	}
+
+	const handleCopyInviteLink = () => {
+		navigator.clipboard
+			.writeText(fullInviteLink)
+			.then(() => toast.success('Invite Link copied to clipboard'));
+	};
+
 	return (
 		<div>
 			<DeleteDialog />
+			<ResetDialog />
 			<Card>
 				<CardHeader className='flex flex-row items-center gap-x-4 justify-between '>
 					<Button
@@ -143,11 +185,7 @@ function EditWorkspaceForm({
 								render={({ field, fieldState }) => (
 									<FormItem>
 										<FormControl>
-											<Input
-												{...field}
-												placeholder='Enter workspace name'
-												className='mb-4'
-											/>
+											<Input {...field} placeholder='Enter workspace name' />
 										</FormControl>
 										{/* Show error message if validation fails */}
 										{fieldState.error && (
@@ -158,8 +196,8 @@ function EditWorkspaceForm({
 							/>
 
 							{/* Image upload section */}
-							<div className='size-64 relative rounded-md overflow-hidden py-4'>
-								<div className='flex flex-col gap-y-2'>
+							<div className='relative rounded-md overflow-hidden py-4'>
+								<div className='flex flex-col'>
 									<div className='flex items-center gap-x-5'>
 										{imagePreview ? (
 											<div>
@@ -172,13 +210,13 @@ function EditWorkspaceForm({
 												/>
 											</div>
 										) : (
-											<Avatar className='size-16'>
+											<Avatar>
 												<AvatarFallback>
 													<ImageIcon className='size-9' />
 												</AvatarFallback>
 											</Avatar>
 										)}
-										<div className='flex flex-col px-8'>
+										<div className='flex flex-col'>
 											<p className='text-sm'>Workplace Icon</p>
 											<input
 												type='file'
@@ -223,7 +261,7 @@ function EditWorkspaceForm({
 									</div>
 								</div>
 							</div>
-							<div className='flex items-center justify-between space-x-2 mt-4'>
+							<div className='flex items-center justify-between space-x-2'>
 								<Button variant='secondary' disabled={isPending} type='submit'>
 									{isPending ? (
 										<Loader size={20} className='text-white animate-spin' />
@@ -234,6 +272,43 @@ function EditWorkspaceForm({
 							</div>
 						</form>
 					</Form>
+				</CardContent>
+			</Card>
+			<Card className='mt-4'>
+				<CardContent>
+					<div className='flex flex-col  mt-4'>
+						<h3 className='font-semibold text-lg'>Invite Members</h3>
+						<p className='text-sm text-muted-foreground'>
+							Share this link to invite members to your workspace.
+						</p>
+						<div className='flex items-center gap-x-2 mt-2'>
+							<Input
+								readOnly
+								value={fullInviteLink}
+								placeholder='Invite link'
+								className='flex-1'
+							/>
+							<Button
+								type='button'
+								variant='outline'
+								onClick={handleCopyInviteLink}
+							>
+								<CopyIcon size={16} />
+							</Button>
+							<Button
+								type='button'
+								variant='outline'
+								onClick={handleResetInviteCode}
+								disabled={isResettingCode}
+							>
+								{isResettingCode ? (
+									<Loader size={20} className='text-white animate-spin' />
+								) : (
+									'Reset Invite Code'
+								)}
+							</Button>
+						</div>
+					</div>
 				</CardContent>
 			</Card>
 			<Card className='mt-4'>

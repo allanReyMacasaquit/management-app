@@ -96,7 +96,7 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 						/>
 
 						{/* Remove the unused field from image input */}
-						<div className='size-64 relative rounded-md overflow-hidden py-4'>
+						<div className=' relative rounded-md overflow-hidden py-4'>
 							<div className='flex flex-col gap-y-2'>
 								<div className='flex items-center gap-x-5'>
 									{imagePreview ? (

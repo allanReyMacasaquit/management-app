@@ -158,6 +158,34 @@ const app = new Hono()
 		await databases.deleteDocument(DATABASE_ID, WORKSPACES_ID, workspaceId);
 
 		return c.json({ data: { $id: workspaceId } });
+	})
+	.post('/:workspaceId/reset-invite-code', sessionMiddleware, async (c) => {
+		const databases = c.get('databases');
+		const user = c.get('user');
+		const { workspaceId } = c.req.param();
+
+		// Ensure the member is an admin of the workspace
+		const member = await getMember({
+			databases,
+			workspaceId,
+			userId: user.$id,
+		});
+		if (!member || member.role !== Role.admin) {
+			return c.json({ error: 'Unauthorized' }, 401);
+		}
+
+		// Generate a new invite code
+		const newInviteCode = generateInviteCode(6);
+
+		// Update the workspace document with the new invite code
+		const updatedData = await databases.updateDocument(
+			DATABASE_ID,
+			WORKSPACES_ID,
+			workspaceId,
+			{ inviteCode: newInviteCode } // Make sure to send the new invite code here
+		);
+
+		return c.json({ data: updatedData });
 	});
 
 export default app;
