@@ -30,7 +30,7 @@ function ResponsiveModal({
 		return (
 			<Dialog open={open} onOpenChange={onOpenChange}>
 				<DialogContent className='w-full lg:max-w-lg p-0 border-none overflow-y-auto hide-scrollbar max-h-[85vh]'>
-					<DialogTitle className='p-2 '>Workspace</DialogTitle>
+					<DialogTitle className='px-6 mt-8 mb-4'>Workspace</DialogTitle>
 					<DialogDescription className='hidden'>
 						&apos;Enter your team name and upload an image to create your
 						workspace&apos;.
@@ -44,7 +44,7 @@ function ResponsiveModal({
 	return (
 		<Drawer open={open} onOpenChange={onOpenChange}>
 			<DrawerContent>
-				<DrawerTitle className='px-2'>Workspace</DrawerTitle>
+				<DrawerTitle className='m-4 pb-4'>Workspace</DrawerTitle>
 				<DrawerDescription className='hidden'>
 					&apos;Enter your team name and upload an image to create your
 					workspace&apos;.

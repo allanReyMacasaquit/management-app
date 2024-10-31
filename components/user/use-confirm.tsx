@@ -8,6 +8,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from '../ui/card';
+import { Separator } from '../ui/separator';
 
 export const useConfirm = (
 	title: string,
@@ -40,13 +41,14 @@ export const useConfirm = (
 
 	const ConfirmationDialog = () => (
 		<ResponsiveModal open={!!promise} onOpenChange={handleClose}>
-			<Card className=''>
-				<CardContent className=''>
+			<Card>
+				<CardContent>
 					<CardHeader>
 						<CardTitle>{title}</CardTitle>
 						<CardDescription>{message}</CardDescription>
 					</CardHeader>
-					<div className='pt-4 w-full flex flex-col gap-y-2 lg:flex-row gap-x-2 items-center'>
+					<Separator />
+					<div className='pt-4 w-full justify-center  flex flex-col gap-y-2 lg:flex-row gap-x-2 items-center'>
 						<Button
 							onClick={handleCancel}
 							variant='outline'

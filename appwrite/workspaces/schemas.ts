@@ -19,3 +19,7 @@ export const updateWorkspacesSchema = z.object({
 		])
 		.optional(),
 });
+
+export const joinWorkspacesSchema = z.object({
+	code: z.string().trim(),
+});

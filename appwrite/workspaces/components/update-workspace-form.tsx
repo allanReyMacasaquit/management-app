@@ -292,12 +292,13 @@ function EditWorkspaceForm({
 								type='button'
 								variant='outline'
 								onClick={handleCopyInviteLink}
+								className='w-fit'
 							>
 								<CopyIcon size={16} />
 							</Button>
 							<Button
 								type='button'
-								variant='outline'
+								variant='destructive'
 								onClick={handleResetInviteCode}
 								disabled={isResettingCode}
 							>
