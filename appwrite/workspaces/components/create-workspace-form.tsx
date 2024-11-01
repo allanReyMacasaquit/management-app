@@ -71,11 +71,16 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 	};
 
 	return (
-		<Card className='w-full h-full shadow-none border-none'>
+		<Card className='w-full h-full bg-gradient-to-t from-slate-600/50 to-slate-300 shadow-none mt-4 border-none rounded-none'>
 			<CardHeader className='flex'>
-				<CardTitle className='text-2xl'>Create a new workspace</CardTitle>
+				<CardTitle className='text-2xl text-center -mb-5 lg:-mb-10'>
+					Create a new workspace
+				</CardTitle>
 			</CardHeader>
-			<DottedSeparator />
+			<div className='w-[150px] lg:w-[300px] mx-auto'>
+				<DottedSeparator />
+			</div>
+
 			<CardContent>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)}>
@@ -116,7 +121,7 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 											</AvatarFallback>
 										</Avatar>
 									)}
-									<div className='flex flex-col px-8'>
+									<div className='flex flex-col py-8'>
 										<p className='text-sm'>Workplace Icon</p>
 										<p className='text-xs text-muted-foreground'></p>
 										<input
@@ -175,7 +180,7 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 								type='button'
 								variant='destructive'
 								onClick={onCancel}
-								className={cn(!onCancel && 'invisible')}
+								className={cn(!onCancel && 'hidden')}
 							>
 								Cancel
 							</Button>

@@ -12,6 +12,7 @@ import {
 	DrawerDescription,
 	DrawerTitle,
 } from '../ui/drawer';
+import Image from 'next/image';
 
 interface ResponsiveModalProps {
 	children: React.ReactNode;
@@ -30,11 +31,16 @@ function ResponsiveModal({
 		return (
 			<Dialog open={open} onOpenChange={onOpenChange}>
 				<DialogContent className='w-full lg:max-w-lg p-0 border-none overflow-y-auto hide-scrollbar max-h-[85vh]'>
-					<DialogTitle className='px-6 mt-8 mb-4'>Workspace</DialogTitle>
-					<DialogDescription className='hidden'>
-						&apos;Enter your team name and upload an image to create your
-						workspace&apos;.
-					</DialogDescription>
+					<DialogTitle className='px-6 mt-4'>
+						<Image
+							src='/assets/church-logo.svg'
+							alt='Logo'
+							width={50}
+							height={50}
+						/>
+						<DialogDescription className=''>Workspace</DialogDescription>
+					</DialogTitle>
+
 					{children}
 				</DialogContent>
 			</Dialog>
@@ -44,12 +50,17 @@ function ResponsiveModal({
 	return (
 		<Drawer open={open} onOpenChange={onOpenChange}>
 			<DrawerContent>
-				<DrawerTitle className='m-4 pb-4'>Workspace</DrawerTitle>
-				<DrawerDescription className='hidden'>
-					&apos;Enter your team name and upload an image to create your
-					workspace&apos;.
-				</DrawerDescription>
-				<div className='overflow-y-auto hide-scrollbar max-h-[85vh]'>
+				<DrawerTitle className='mx-8'>
+					<Image
+						src='/assets/church-logo.svg'
+						alt='Logo'
+						width={50}
+						height={50}
+					/>
+					<span>Workspace</span>
+				</DrawerTitle>
+				<DrawerDescription></DrawerDescription>
+				<div className='overflow-y-auto hide-scrollbar max-h-[100vh]'>
 					{children}
 				</div>
 			</DrawerContent>

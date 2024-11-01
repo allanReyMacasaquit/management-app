@@ -9,6 +9,7 @@ import {
 	CardTitle,
 } from '../ui/card';
 import { Separator } from '../ui/separator';
+import DottedSeparator from '@/features/components/dotted-separator';
 
 export const useConfirm = (
 	title: string,
@@ -41,14 +42,18 @@ export const useConfirm = (
 
 	const ConfirmationDialog = () => (
 		<ResponsiveModal open={!!promise} onOpenChange={handleClose}>
-			<Card>
-				<CardContent>
+			<div className=' w-[300px] mx-auto mt-2 lg:hidden'>
+				<DottedSeparator />
+			</div>
+
+			<Card className='border-none shadow-none'>
+				<CardContent className='bg-slate-300'>
 					<CardHeader>
-						<CardTitle>{title}</CardTitle>
-						<CardDescription>{message}</CardDescription>
+						<CardTitle className='text-center'>{title}</CardTitle>
+						<CardDescription className='text-center'>{message}</CardDescription>
 					</CardHeader>
-					<Separator />
-					<div className='pt-4 w-full justify-center  flex flex-col gap-y-2 lg:flex-row gap-x-2 items-center'>
+					<Separator className=' w-[300px] mx-auto' />
+					<div className='pt-4 w-full justify-center flex flex-col gap-y-2 lg:flex-row gap-x-2 items-center'>
 						<Button
 							onClick={handleCancel}
 							variant='outline'

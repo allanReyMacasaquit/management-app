@@ -15,6 +15,7 @@ import { useInviteCode } from '../hooks/use-invite-code';
 import { useWorkspaceId } from '../hooks/use-workspace-id';
 import { useRouter } from 'next/navigation';
 import { Loader } from 'lucide-react';
+import Image from 'next/image';
 
 interface JoinWorkspaceFormProps {
 	initialValues: string;
@@ -46,9 +47,17 @@ function JoinWorkspaceForm({ initialValues }: JoinWorkspaceFormProps) {
 	};
 
 	return (
-		<Card className='w-full h-full mt-10'>
-			<CardHeader className='flex'>
-				<CardTitle className='text-2xl'>Join Workspace</CardTitle>
+		<Card className='w-full h-full border-none shadow-none mt-10'>
+			<CardHeader>
+				<CardTitle className='text-2xl'>
+					<Image
+						src='/assets/church-logo.svg'
+						alt='Logo'
+						width={50}
+						height={50}
+					/>
+				</CardTitle>
+				<CardTitle>Join Workspace</CardTitle>
 			</CardHeader>
 			<DottedSeparator />
 			<CardDescription className='m-6 '>

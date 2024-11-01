@@ -1,4 +1,3 @@
-// import CreateWorkspaceForm from '@/appwrite/workspaces/components/create-workspace';
 import { getWorkspaces } from '@/appwrite/workspaces/actions';
 import { getCurrent } from '@/features/actions';
 import { redirect } from 'next/navigation';

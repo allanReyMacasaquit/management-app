@@ -160,7 +160,7 @@ function EditWorkspaceForm({
 		<div>
 			<DeleteDialog />
 			<ResetDialog />
-			<Card>
+			<Card className='border-none shadow-none'>
 				<CardHeader className='flex gap-x-4 p-7 space-y-0'>
 					<div className='flex items-center justify-between'>
 						<Button
@@ -282,10 +282,10 @@ function EditWorkspaceForm({
 					</Form>
 				</CardContent>
 			</Card>
-			<Card className='mt-4'>
+			<Card className='mt-4 border-none shadow-none'>
 				<CardContent>
 					<div className='flex flex-col  mt-4'>
-						<h3 className='font-semibold text-lg'>Invite Members</h3>
+						<h3 className='font-semibold text-lg mt-4'>Invite Members</h3>
 						<p className='text-sm text-muted-foreground'>
 							Share this link to invite members to your workspace.
 						</p>
@@ -320,10 +320,10 @@ function EditWorkspaceForm({
 					</div>
 				</CardContent>
 			</Card>
-			<Card className='mt-4'>
+			<Card className='mt-4 border-none shadow-none bg-amber-100'>
 				<CardContent>
 					<div className='flex flex-col mt-4'>
-						<h3 className='font-bold'>Danger Zone</h3>
+						<h3 className='font-bold mt-4'>Danger Zone</h3>
 						<p className='text-sm text-muted-foreground'>
 							Deleting a workspace is irreversible and will remove all
 							associated data.
@@ -332,11 +332,15 @@ function EditWorkspaceForm({
 							type='button'
 							variant='destructive'
 							size='sm'
-							className='mt-4 w-fit ml-auto'
-							disabled={isPending || isDeletingWorkspace}
+							className='mt-4 w-fit ml-auto p-4 text-sm'
+							disabled={isDeletingWorkspace}
 							onClick={handleDelete}
 						>
-							Delete Workspace
+							{isDeletingWorkspace ? (
+								<Loader size={20} className='text-white animate-spin' />
+							) : (
+								'Delete Workspace'
+							)}
 						</Button>
 					</div>
 				</CardContent>

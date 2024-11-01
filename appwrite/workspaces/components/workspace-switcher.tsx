@@ -27,11 +27,8 @@ function WorkspaceSwitcher() {
 	return (
 		<div className='flex flex-col'>
 			<div className='flex items-center justify-between p-4 border rounded-xl mt-4'>
-				<p>Workspace</p>
-				<RiAddCircleFill
-					onClick={open}
-					className='size-6 text-neutral-500 hover '
-				/>
+				<p>Create Workspace</p>
+				<RiAddCircleFill onClick={open} className='size-6 text-neutral-500  ' />
 			</div>
 
 			<div className='mt-2'>
