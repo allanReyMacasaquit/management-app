@@ -18,6 +18,7 @@ function StandaloneLayout({ children }: StandaloneLayoutProps) {
 							alt='logo'
 							height={50}
 							width={50}
+							priority
 						/>
 					</Link>
 					<UserButton />

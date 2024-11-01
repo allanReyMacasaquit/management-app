@@ -161,21 +161,29 @@ function EditWorkspaceForm({
 			<DeleteDialog />
 			<ResetDialog />
 			<Card>
-				<CardHeader className='flex flex-row items-center gap-x-4 justify-between '>
-					<Button
-						onClick={
-							onCancel
-								? onCancel
-								: () => router.push(`/workspaces/${initialValues.$id}`)
-						}
-						variant='outline'
-					>
-						<ArrowLeftIcon size={14} />
-						Back
-					</Button>
-					<CardTitle className='text-2xl'>{initialValues.name}</CardTitle>
+				<CardHeader className='flex gap-x-4 p-7 space-y-0'>
+					<div className='flex items-center justify-between'>
+						<Button
+							onClick={
+								onCancel
+									? onCancel
+									: () => router.push(`/workspaces/${initialValues.$id}`)
+							}
+							variant='outline'
+							className='w-fit'
+						>
+							<ArrowLeftIcon size={14} />
+							Back
+						</Button>
+						<CardTitle className='text-2xl uppercase lg:mr-20'>
+							{initialValues.name}
+						</CardTitle>
+						<div></div>
+					</div>
 				</CardHeader>
-				<DottedSeparator />
+				<div className='w-[300px] lg:w-[200px] mx-auto'>
+					<DottedSeparator />
+				</div>
 				<CardContent>
 					<Form {...form}>
 						<form onSubmit={form.handleSubmit(onSubmit)}>
