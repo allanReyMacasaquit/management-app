@@ -4,37 +4,38 @@ import { cn } from '@/lib/utils';
 import { AvatarIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 
-interface WorkspaceAvatarProps {
+interface ProjectAvatarProps {
 	name: string;
 	image?: string;
 	className?: string;
 }
 
-function WorkspaceAvatar({ name, image, className }: WorkspaceAvatarProps) {
+function ProjectAvatar({ image, className }: ProjectAvatarProps) {
 	if (image) {
 		return (
 			<div
 				className={cn(
-					'size-8 relative flex items-center rounded-lg overflow-hidden',
+					' size-8 relative rounded-full flex items-center overflow-hidden',
 					className
 				)}
 			>
-				<Image
-					src={image}
-					alt='avatar'
-					width={100}
-					height={100}
-					className='object-cover'
-				/>
+				<div>
+					<Image
+						src={image}
+						alt='avatar'
+						width={100}
+						height={100}
+						className='object-cover'
+					/>
+				</div>
 			</div>
 		);
 	}
 
 	return (
-		<Avatar className='rounded-full p-1'>
+		<Avatar className='rounded-full'>
 			<AvatarIcon className='scale-100 w-full h-full text-blue-600'></AvatarIcon>
-			<span className='uppercase items-center'>{name[0]}</span>
 		</Avatar>
 	);
 }
-export default WorkspaceAvatar;
+export default ProjectAvatar;

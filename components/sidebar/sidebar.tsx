@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Separator } from '../ui/separator';
 import Navigation from '../navigation/navigation';
 import WorkspaceSwitcher from '@/appwrite/workspaces/components/workspace-switcher';
+import Projects from '@/appwrite/projects/components/projects';
 
 function Sidebar() {
 	return (
@@ -20,6 +21,8 @@ function Sidebar() {
 				<Separator className='mt-4' />
 			</Link>
 			<Navigation />
+			<Separator className='mt-4' />
+			<Projects />
 		</aside>
 	);
 }

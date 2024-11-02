@@ -40,8 +40,12 @@ function WorkspaceSwitcher() {
 						{workspaces?.documents.map(({ $id, name, imageUrl }) => (
 							<SelectItem key={$id} value={$id}>
 								<div className='flex items-center justify-start gap-3 font font-medium'>
-									<WorkspaceAvatar name={name} image={imageUrl} />
-									<p className='ml-2 truncate'>{name}</p>
+									<WorkspaceAvatar
+										name={name}
+										image={imageUrl}
+										className='rounded-full'
+									/>
+									<p className='truncate'>{name}</p>
 								</div>
 							</SelectItem>
 						))}
