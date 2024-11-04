@@ -6,7 +6,7 @@ import { getMember } from '../members/utils';
 import { Workspace } from './types';
 
 // Initialize and authenticate Appwrite client
-const initializeClient = () => {
+export const initializeClient = () => {
 	const client = new Client()
 		.setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
 		.setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!);
@@ -19,7 +19,7 @@ const initializeClient = () => {
 };
 
 // Fetch current user details
-const getUser = async (client: Client) => {
+export const getUser = async (client: Client) => {
 	const account = new Account(client);
 	return await account.get();
 };

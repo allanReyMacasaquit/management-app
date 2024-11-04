@@ -25,9 +25,6 @@ import { createProjectSchema } from '../schemas';
 import { useCreateProjects } from '../hooks/use-create-projects';
 import { useWorkspaceId } from '@/appwrite/workspaces/hooks/use-workspace-id';
 import { useRouter } from 'next/navigation';
-import { useGetProjects } from '../hooks/use-get-projects';
-import { useProjectId } from '../hooks/use-project-Id';
-
 interface CreateProjectFormProps {
 	onCancel?: () => void;
 }
