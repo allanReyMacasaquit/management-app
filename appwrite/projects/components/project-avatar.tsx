@@ -8,14 +8,19 @@ interface ProjectAvatarProps {
 	name: string;
 	image?: string;
 	className?: string;
+	fallbackClassName?: string;
 }
 
-function ProjectAvatar({ image, className }: ProjectAvatarProps) {
+function ProjectAvatar({
+	image,
+	className,
+	fallbackClassName,
+}: ProjectAvatarProps) {
 	if (image) {
 		return (
 			<div
 				className={cn(
-					' size-8 relative rounded-full flex items-center overflow-hidden',
+					'size-10 relative rounded-full flex items-center overflow-hidden',
 					className
 				)}
 			>
@@ -34,7 +39,12 @@ function ProjectAvatar({ image, className }: ProjectAvatarProps) {
 
 	return (
 		<Avatar className='rounded-full'>
-			<AvatarIcon className='scale-100 w-full h-full text-blue-600'></AvatarIcon>
+			<AvatarIcon
+				className={cn(
+					`scale-100 w-full h-full text-blue-600`,
+					fallbackClassName
+				)}
+			></AvatarIcon>
 		</Avatar>
 	);
 }

@@ -16,12 +16,11 @@ function Sidebar() {
 					width={50}
 					priority
 				/>
-				<Separator className='mt-4' />
-				<WorkspaceSwitcher />
-				<Separator className='mt-4' />
 			</Link>
 			<Navigation />
-			<Separator className='mt-4' />
+			<Separator className='mt-4 shadow-lg p-[2px] rounded-full' />
+			<WorkspaceSwitcher />
+			<Separator className='mt-4 shadow-lg p-[2px] rounded-full' />
 			<Projects />
 		</aside>
 	);

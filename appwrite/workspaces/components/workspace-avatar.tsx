@@ -32,7 +32,7 @@ function WorkspaceAvatar({ name, image, className }: WorkspaceAvatarProps) {
 
 	return (
 		<Avatar className='rounded-full p-1'>
-			<AvatarIcon className='scale-100 w-full h-full text-blue-600'></AvatarIcon>
+			<AvatarIcon className='scale-100 w-full h-full text-blue-600' />
 			<span className='uppercase items-center'>{name[0]}</span>
 		</Avatar>
 	);

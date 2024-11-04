@@ -7,10 +7,9 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import useCreateProjectsModal from '../hooks/use-create-projects-modal';
-import ProjectAvatar from './project-avatar';
+import WorkspaceAvatar from '@/appwrite/workspaces/components/workspace-avatar';
 
 function Projects() {
-	const projectId = 123; // Todo
 	const pathname = usePathname();
 	const workspaceId = useWorkspaceId();
 	const { data } = useGetProjects({
@@ -19,25 +18,31 @@ function Projects() {
 	const { open } = useCreateProjectsModal();
 
 	return (
-		<div className='flex flex-col'>
-			<div className='flex items-center justify-between p-4 border rounded-xl mt-4'>
-				<p>Create Project</p>
+		<div className='flex flex-col rounded-lg'>
+			<div className='flex items-center capitalize justify-between p-4 border rounded-xl mt-4'>
+				{data?.documents?.length === 1
+					? 'Project'
+					: data?.documents.length || 0 > 1
+					? 'Projects'
+					: 'Create Project'}
+
 				<RiAddCircleFill onClick={open} className='size-6 text-neutral-500  ' />
 			</div>
 			{data?.documents.map((project) => {
-				const href = `/workspaces/${workspaceId}/projects/${projectId}`;
+				const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
 				const isActive = pathname === href;
 
 				return (
 					<Link href={href} key={project.$id}>
 						<div
 							className={cn(
-								`flex items py-2 rounded-full hover:opacity-75 transition cursor-pointer`,
-								isActive && 'bg-white shadow-md hover:opacity-100 text-primary'
+								`flex items p-1 mt-2 rounded-lg  text-muted-foreground hover:opacity-75 transition cursor-pointer`,
+								isActive &&
+									'shadow-md hover:opacity-75 border transition text-black'
 							)}
 						>
-							<ProjectAvatar image={project.imageUrl} name={project.name} />
-							<span className='ml-2 truncate flex items-center'>
+							<WorkspaceAvatar image={project.imageUrl} name={project.name} />
+							<span className='ml-2 truncate flex items-center capitalize'>
 								{project.name}
 							</span>
 						</div>

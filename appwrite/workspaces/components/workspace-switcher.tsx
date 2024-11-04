@@ -27,7 +27,11 @@ function WorkspaceSwitcher() {
 	return (
 		<div className='flex flex-col'>
 			<div className='flex items-center justify-between p-4 border rounded-xl mt-4'>
-				<p>Create Workspace</p>
+				{workspaces?.documents?.length === 1
+					? 'Workspace'
+					: workspaces?.documents.length || 0 > 1
+					? 'Workspaces'
+					: 'Create Workspace'}
 				<RiAddCircleFill onClick={open} className='size-6 text-neutral-500  ' />
 			</div>
 
@@ -45,7 +49,7 @@ function WorkspaceSwitcher() {
 										image={imageUrl}
 										className='rounded-full'
 									/>
-									<p className='truncate'>{name}</p>
+									<p className='uppercase truncate'>{name}</p>
 								</div>
 							</SelectItem>
 						))}

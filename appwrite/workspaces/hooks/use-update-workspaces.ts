@@ -36,14 +36,11 @@ export const useUpdateWorkspaces = () => {
 			// Return the response as ResponseType
 			return (await response.json()) as ResponseType;
 		},
-		onSuccess: (data) => {
+		onSuccess: () => {
 			toast.success('Workspace updated successfully');
 
 			// Invalidate queries to refresh the updated workspace list and details
 			queryClient.invalidateQueries({ queryKey: ['workspaces'] });
-			queryClient.invalidateQueries({
-				queryKey: ['workspace', data.data?.$id],
-			});
 		},
 		onError: (error) => {
 			// Enhanced error message
