@@ -1,4 +1,5 @@
 import CreateProjectModal from '@/appwrite/projects/components/create-project-modal';
+import CreateTasksModal from '@/appwrite/tasks/components/create-tasks-modal';
 import CreateWorkspaceModal from '@/appwrite/workspaces/components/create-workspace-modal';
 import Navbar from '@/components/navbar/navbar';
 import Sidebar from '@/components/sidebar/sidebar';
@@ -12,6 +13,7 @@ function Dashboardlayout({ children }: DashboardlayoutProps) {
 		<div className='min-h-screen'>
 			<CreateWorkspaceModal />
 			<CreateProjectModal />
+			<CreateTasksModal />
 			<div className='flex w-full h-full'>
 				<div className='fixed left-0 top-0 hidden lg:block lg:w-60 h-full overflow-y-auto'>
 					<Sidebar />

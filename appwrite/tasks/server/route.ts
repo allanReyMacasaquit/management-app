@@ -12,9 +12,7 @@ import {
 import { ID, Query } from 'node-appwrite';
 import { createAdminClient } from '@/appwrite/appwrite';
 import { Project } from '@/appwrite/projects/types';
-const app = new Hono();
-
-app
+const app = new Hono()
 	.get(
 		'/',
 		sessionMiddleware,
