@@ -2,6 +2,7 @@
 import { client } from '@/lib/hono-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 // Define the expected response type for creating a workspace
@@ -12,6 +13,7 @@ type RequestType = InferRequestType<typeof client.api.workspaces.$post>;
 
 // Custom hook to handle workspace creation
 export const useCreateWorkspaces = () => {
+	const router = useRouter();
 	const queryClient = useQueryClient();
 
 	const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -31,7 +33,7 @@ export const useCreateWorkspaces = () => {
 		},
 		onSuccess: () => {
 			toast.success('Workspace created successfully');
-
+			router.refresh();
 			// Invalidate queries to refresh workspace list
 			queryClient.invalidateQueries({ queryKey: ['workspaces'] });
 		},

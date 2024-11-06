@@ -6,23 +6,23 @@ import { toast } from 'sonner';
 
 // Define the expected response type for the update workspace operation
 type ResponseType = InferResponseType<
-	(typeof client.api.workspaces)[':workspaceId']['$patch'],
+	(typeof client.api.projects)[':projectId']['$patch'],
 	200
 >;
 
 // Define the request type for the update workspace operation
 type RequestType = InferRequestType<
-	(typeof client.api.workspaces)[':workspaceId']['$patch']
+	(typeof client.api.projects)[':projectId']['$patch']
 >;
 
 // Custom hook to handle updating workspaces
-export const useUpdateWorkspaces = () => {
+export const useUpdateProject = () => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
 	const mutation = useMutation<ResponseType, Error, RequestType>({
 		mutationFn: async ({ form, param }) => {
-			const response = await client.api.workspaces[':workspaceId']['$patch']({
+			const response = await client.api.projects[':projectId']['$patch']({
 				form,
 				param,
 			});
@@ -38,15 +38,15 @@ export const useUpdateWorkspaces = () => {
 			// Return the response as ResponseType
 			return (await response.json()) as ResponseType;
 		},
-		onSuccess: () => {
-			toast.success('Workspace updated successfully');
+		onSuccess: ({ data }) => {
 			router.refresh();
-			// Invalidate queries to refresh the updated workspace list and details
-			queryClient.invalidateQueries({ queryKey: ['workspaces'] });
+			toast.success('Project updated successfully');
+			queryClient.invalidateQueries({ queryKey: ['projects'] });
+			queryClient.invalidateQueries({ queryKey: ['projects', data.$id] });
 		},
 		onError: (error) => {
 			// Enhanced error message
-			toast.error(`Failed to update workspace: ${error.message}`);
+			toast.error(`Failed to update project: ${error.message}`);
 		},
 	});
 

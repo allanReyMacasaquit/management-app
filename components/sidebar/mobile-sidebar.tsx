@@ -17,13 +17,13 @@ function MobileSidebar() {
 		setIsOpen(false);
 	}, [pathname]);
 
-	const isDesktop = useMedia('(min-width: 1080px)', true);
+	const isDesktop = useMedia('(min-width: 1020px)', true);
 
 	if (isDesktop) {
 		return (
 			<Sheet modal={false} open={isOpen} onOpenChange={setIsOpen}>
 				<SheetTrigger asChild>
-					<Button className='lg:hidden'>
+					<Button variant='secondary' className='lg:hidden w-fit'>
 						<MenuIcon />
 					</Button>
 				</SheetTrigger>

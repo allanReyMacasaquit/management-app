@@ -4,6 +4,7 @@ import { Client, Account, Databases, Query } from 'node-appwrite';
 import { DATABASE_ID, MEMBERS_ID, WORKSPACES_ID } from '../config';
 import { getMember } from '../members/utils';
 import { Workspace } from './types';
+import { toast } from 'sonner';
 
 // Initialize and authenticate Appwrite client
 export const initializeClient = () => {
@@ -67,16 +68,23 @@ export const getWorkspace = async ({ workspaceId }: GetWorkspaceProps) => {
 		userId: user.$id,
 		workspaceId,
 	});
-	if (!member) return null;
+	if (!member) {
+		throw new Error('Unauthorized - Member not found');
+	}
 
 	try {
+		// Attempt to retrieve the workspace document
 		return await databases.getDocument<Workspace>(
 			DATABASE_ID,
 			WORKSPACES_ID,
 			workspaceId
 		);
-	} catch {
-		return null;
+	} catch (error) {
+		if (error instanceof Error) {
+			toast.error('Network issue - please try again later.');
+		} else {
+			toast.error('Unauthorized access or workspace not found.');
+		}
 	}
 };
 
@@ -102,6 +110,6 @@ export const getWorkspaceInfo = async ({
 
 		return { name: workspace.name };
 	} catch {
-		return null;
+		throw new Error('Unauthorized - Name not found');
 	}
 };

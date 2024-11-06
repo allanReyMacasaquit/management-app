@@ -36,9 +36,9 @@ function Projects() {
 					<Link href={href} key={project.$id}>
 						<div
 							className={cn(
-								`flex items p-1 mt-2 rounded-lg  text-muted-foreground hover:opacity-75 transition cursor-pointer`,
+								`flex items p-1 mt-2 rounded-lg text-muted-foreground hover:opacity-75 transition cursor-pointer`,
 								isActive &&
-									'shadow-md hover:opacity-75 border transition text-black'
+									'shadow-md bg-blue-300 hover:opacity-75 border transition text-black'
 							)}
 						>
 							<WorkspaceAvatar image={project.imageUrl} name={project.name} />

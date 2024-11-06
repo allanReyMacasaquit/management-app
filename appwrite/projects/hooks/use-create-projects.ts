@@ -2,6 +2,7 @@
 import { client } from '@/lib/hono-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 type ResponseType = Exclude<
@@ -12,6 +13,7 @@ type ResponseType = Exclude<
 type RequestType = InferRequestType<typeof client.api.projects.$post>;
 
 export const useCreateProjects = () => {
+	const router = useRouter();
 	const queryClient = useQueryClient();
 
 	const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -28,6 +30,7 @@ export const useCreateProjects = () => {
 			return (await response.json()) as ResponseType;
 		},
 		onSuccess: () => {
+			router.refresh();
 			toast.success('Project created successfully');
 			queryClient.invalidateQueries({
 				queryKey: ['projects'],

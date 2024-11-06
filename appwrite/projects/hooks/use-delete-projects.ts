@@ -5,46 +5,45 @@ import { toast } from 'sonner';
 
 // Define the expected response type for the delete operation
 type ResponseType = InferResponseType<
-	(typeof client.api.workspaces)[':workspaceId']['$delete'],
+	(typeof client.api.projects)[':projectId']['$delete'],
 	200
 >;
 
 // Define the request type for the delete operation
 type RequestType = InferRequestType<
-	(typeof client.api.workspaces)[':workspaceId']['$delete']
+	(typeof client.api.projects)[':projectId']['$delete']
 >;
 
 // Custom hook to handle deleting workspaces
-export const useDeleteWorkspaces = () => {
+export const useDeleteProjects = () => {
 	const queryClient = useQueryClient();
 
 	const mutation = useMutation<ResponseType, Error, RequestType>({
 		mutationFn: async ({ param }) => {
-			const response = await client.api.workspaces[':workspaceId']['$delete']({
+			const response = await client.api.projects[':projectId']['$delete']({
 				param,
 			});
 
 			// Check if the response is not OK and throw an error
 			if (!response.ok) {
 				const errorResponse = await response.json();
-				throw new Error(`Failed to delete workspace: ${errorResponse}`);
+				throw new Error(`Failed to delete project: ${errorResponse}`);
 			}
 
 			// Return the response JSON
 			return await response.json(); // Return as ResponseType
 		},
 		onSuccess: (data) => {
-			toast.success('Workspace deleted successfully');
-
+			toast.success('Project deleted successfully');
 			queryClient.invalidateQueries({
-				queryKey: ['workspaces'],
+				queryKey: ['projects'],
 			});
 			queryClient.invalidateQueries({
-				queryKey: ['workspace', data.data.$id],
+				queryKey: ['projects', data.data.$id],
 			});
 		},
 		onError: () => {
-			toast.error('Failed to delete workspace');
+			toast.error('Failed to delete project');
 		},
 	});
 

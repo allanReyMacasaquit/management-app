@@ -1,6 +1,7 @@
 import { client } from '@/lib/hono-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 // Define the expected response type for the delete operation
@@ -16,6 +17,7 @@ type RequestType = InferRequestType<
 
 // Custom hook to handle deleting workspaces
 export const useResetInviteCode = () => {
+	const router = useRouter();
 	const queryClient = useQueryClient();
 
 	const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -37,7 +39,7 @@ export const useResetInviteCode = () => {
 		},
 		onSuccess: (data) => {
 			toast.success('Reset invite code successfully');
-			// Invalidate queries to refresh the workspace list and details
+			router.refresh();
 			queryClient.invalidateQueries({
 				queryKey: ['workspaces'],
 			});
