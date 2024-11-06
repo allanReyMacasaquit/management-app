@@ -42,8 +42,8 @@ const app = new Hono()
 	})
 	.post(
 		'/',
-		zValidator('form', createWorkspacesSchema),
 		sessionMiddleware,
+		zValidator('form', createWorkspacesSchema),
 		async (c) => {
 			const databases = c.get('databases');
 			const user = c.get('user');

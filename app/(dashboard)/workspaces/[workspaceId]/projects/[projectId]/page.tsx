@@ -1,5 +1,6 @@
 import { getProject } from '@/appwrite/projects/actions';
 import ProjectAvatar from '@/appwrite/projects/components/project-avatar';
+import TaskViewSwitcher from '@/appwrite/tasks/components/task-view-switcher';
 import { Button } from '@/components/ui/button';
 import { getCurrent } from '@/features/actions';
 import { PencilIcon } from 'lucide-react';
@@ -40,6 +41,7 @@ async function ProjectIdPage({ params }: ProjectIdPage) {
 					</Button>
 				</Link>
 			</div>
+			<TaskViewSwitcher />
 		</div>
 	);
 }
