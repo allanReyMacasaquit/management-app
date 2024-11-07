@@ -47,7 +47,7 @@ export const useConfirm = (
 			</div>
 
 			<Card className='border-none shadow-none'>
-				<CardContent className='bg-slate-300'>
+				<CardContent className=''>
 					<CardHeader>
 						<CardTitle className='text-center'>{title}</CardTitle>
 						<CardDescription className='text-center'>{message}</CardDescription>

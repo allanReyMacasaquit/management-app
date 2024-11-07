@@ -71,7 +71,7 @@ function CreateWorkspaceForm({ onCancel }: CreateWorkspaceFormProps) {
 	};
 
 	return (
-		<Card className='w-full h-full bg-gradient-to-t from-slate-600/50 to-slate-300 shadow-none mt-4 border-none rounded-none'>
+		<Card className='w-full h-full bg-gradient-to-t from-sky-300 shadow-none mt-4 border-none rounded-none'>
 			<CardHeader className='flex'>
 				<CardTitle className='text-2xl text-center -mb-5 lg:-mb-10'>
 					Create a new workspace

@@ -72,7 +72,7 @@ function MembersList() {
 	};
 
 	return (
-		<Card>
+		<Card className='h-full bg-gradient-to-t from-sky-300'>
 			<RemoveConfirmDialog />
 			<LastMemberDialog />
 			<CardHeader className='flex gap-x-4 p-7 space-y-0'>
