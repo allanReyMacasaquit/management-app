@@ -2,13 +2,35 @@
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PlusIcon } from 'lucide-react';
+import { Loader, PlusIcon } from 'lucide-react';
 import useCreateTasksModal from '../hooks/use-create-tasks-modal';
+import { useGetTasks } from '../hooks/use-get-tasks';
+import { useWorkspaceId } from '@/appwrite/workspaces/hooks/use-workspace-id';
+import { useQueryState } from 'nuqs';
+import DataFilters from './data-filters';
+import useFilterTasks from '../hooks/use-filter-tasks';
 
 function TaskViewSwitcher() {
+	const [{ assigneeId, dueDate, projectId, status }] = useFilterTasks();
+	const [view, setView] = useQueryState('task-view', {
+		defaultValue: 'table',
+	});
+	const workspaceId = useWorkspaceId();
 	const { open } = useCreateTasksModal();
+	const { data: tasks, isLoading: isLoadingTask } = useGetTasks({
+		workspaceId,
+		assigneeId,
+		dueDate,
+		projectId,
+		status,
+	});
+
 	return (
-		<Tabs className='w-full flex-1 border rounded-lg'>
+		<Tabs
+			defaultValue={view}
+			onValueChange={setView}
+			className='w-full flex-1 border rounded-lg'
+		>
 			<div className='h-full flex flex-col overflow-auto p-4'>
 				<div className='flex flex-col gap-y-2 lg:flex-row justify-between'>
 					<TabsList className='w-full lg:w-auto'>
@@ -33,11 +55,26 @@ function TaskViewSwitcher() {
 					</Button>
 				</div>
 				<Separator className='bg-white my-4' />
-				Data filters
+				<DataFilters hideProjectFilter={false} />
 				<Separator className='bg-white my-4' />
-				<TabsContent value='table'>Data table</TabsContent>
-				<TabsContent value='kanban'>Data kanban</TabsContent>
-				<TabsContent value='calendar'>Data calendar</TabsContent>
+
+				{isLoadingTask ? (
+					<div className='flex items-center justify-center min-h-56'>
+						<Loader className='w-10 h-10 animate-spin text-muted-foreground' />
+					</div>
+				) : (
+					<>
+						<TabsContent value='table'>
+							Data table {JSON.stringify(tasks)}
+						</TabsContent>
+						<TabsContent value='kanban'>
+							Data kanban {JSON.stringify(tasks)}
+						</TabsContent>
+						<TabsContent value='calendar'>
+							Data calendar {JSON.stringify(tasks)}
+						</TabsContent>
+					</>
+				)}
 			</div>
 		</Tabs>
 	);

@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import DottedSeparator from '@/features/components/dotted-separator';
+
 import {
 	Form,
 	FormControl,
@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 import { useWorkspaceId } from '@/appwrite/workspaces/hooks/use-workspace-id';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { useProjectId } from '@/appwrite/projects/hooks/use-project-id';
 import { useCreateTasks } from '../hooks/use-create-tasks';
 import { createTasksSchema } from '../schemas';
@@ -93,13 +93,10 @@ function CreateTaskForm({
 	return (
 		<Card className='w-full h-full bg-gradient-to-t from-sky-300  shadow-none mt-4 border-none rounded-none'>
 			<CardHeader className='flex'>
-				<CardTitle className='text-2xl text-center -mb-5 lg:-mb-10'>
+				<CardTitle className='text-2xl text-center'>
 					Create a new task
 				</CardTitle>
 			</CardHeader>
-			<div className='w-[150px] lg:w-[300px] mx-auto mt-8'>
-				<DottedSeparator />
-			</div>
 
 			<CardContent>
 				<Form {...form}>

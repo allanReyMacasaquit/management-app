@@ -30,7 +30,7 @@ function ResponsiveModal({
 	if (isDesktop) {
 		return (
 			<Dialog open={open} onOpenChange={onOpenChange}>
-				<DialogContent className='w-full lg:max-w-lg p-0 border-none overflow-y-auto hide-scrollbar max-h-[85vh]'>
+				<DialogContent className='w-full bg-gradient-to-t from-sky-600 lg:max-w-lg p-0 border-none overflow-y-auto hide-scrollbar max-h-[85vh]'>
 					<DialogTitle className='px-6 mt-4'>
 						<Image
 							src='/assets/church-logo.svg'
@@ -49,7 +49,7 @@ function ResponsiveModal({
 
 	return (
 		<Drawer open={open} onOpenChange={onOpenChange}>
-			<DrawerContent>
+			<DrawerContent className='bg-gradient-to-t rounded-b-none-no from-sky-300'>
 				<DrawerTitle className='mx-8'>
 					<Image
 						src='/assets/church-logo.svg'

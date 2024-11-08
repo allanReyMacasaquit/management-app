@@ -157,10 +157,10 @@ function EditWorkspaceForm({
 	};
 
 	return (
-		<div>
+		<div className='border rounded-2xl bg-slate-400 w-full'>
 			<DeleteDialog />
 			<ResetDialog />
-			<Card className='border-none bg-gradient-to-t from-sky-300 shadow-none'>
+			<Card className='border-none rounded-b-none bg-gradient-to-t from-sky-300 shadow-none'>
 				<CardHeader className='flex gap-x-4 p-7 space-y-0'>
 					<div className='flex items-center justify-between'>
 						<Button
@@ -282,9 +282,9 @@ function EditWorkspaceForm({
 					</Form>
 				</CardContent>
 			</Card>
-			<Card className='mt-4 bg-gradient-to-b from-sky-300 border-none shadow-none'>
+			<Card className='mt-1 rounded-none bg-gradient-to-b from-sky-300 border-none shadow-none'>
 				<CardContent>
-					<div className='flex flex-col  mt-4'>
+					<div className='flex flex-col '>
 						<h3 className='font-semibold text-lg mt-4'>Invite Members</h3>
 						<p className='text-sm text-muted-foreground'>
 							Share this link to invite members to your workspace.
@@ -320,9 +320,9 @@ function EditWorkspaceForm({
 					</div>
 				</CardContent>
 			</Card>
-			<Card className='mt-4 border-none shadow-none bg-gradient-to-t from-sky-300'>
+			<Card className='mt-1 rounded-t-none border-none shadow-none bg-gradient-to-t from-sky-300'>
 				<CardContent>
-					<div className='flex flex-col mt-4'>
+					<div className='flex flex-col'>
 						<h3 className='font-bold mt-4'>Danger Zone</h3>
 						<p className='text-sm text-muted-foreground'>
 							Deleting a workspace is irreversible and will remove all

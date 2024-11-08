@@ -3,7 +3,7 @@ import { parseAsBoolean, useQueryState } from 'nuqs';
 
 function useCreateTasksModal() {
 	const [isOpen, setIsOpen] = useQueryState(
-		'create-task',
+		'create-tasks',
 		parseAsBoolean.withDefault(false).withOptions({ clearOnDefault: true })
 	);
 	const open = () => setIsOpen(true);

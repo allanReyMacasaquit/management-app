@@ -12,7 +12,7 @@ export const createTasksSchema = z.object({
 });
 
 export const getTasksSchema = z.object({
-	name: z.string().trim().min(1, 'Required'),
+	name: z.string().nullish(),
 	description: z.string().optional(),
 	status: z.nativeEnum(TaskStatus).nullish(),
 	workspaceId: z.string(),

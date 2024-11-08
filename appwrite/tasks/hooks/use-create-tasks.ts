@@ -10,7 +10,7 @@ type ResponseType = Exclude<
 	{ error: string }
 >;
 
-type RequestType = InferRequestType<typeof client.api.tasks.$post>;
+type RequestType = InferRequestType<(typeof client.api)['tasks']['$post']>;
 
 export const useCreateTasks = () => {
 	const router = useRouter();
@@ -18,7 +18,7 @@ export const useCreateTasks = () => {
 
 	const mutation = useMutation<ResponseType, Error, RequestType>({
 		mutationFn: async ({ json }) => {
-			const response = await client.api.tasks.$post({ json });
+			const response = await client.api['tasks']['$post']({ json });
 
 			if (!response.ok) {
 				const errorResponse = await response.json();
@@ -33,7 +33,7 @@ export const useCreateTasks = () => {
 			router.refresh();
 			toast.success('Task created successfully');
 			queryClient.invalidateQueries({
-				queryKey: ['projects'],
+				queryKey: ['tasks'],
 			});
 		},
 		onError: (error) => {

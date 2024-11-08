@@ -35,7 +35,7 @@ export const useWarning = (
 
 	const WarningDialog = () => (
 		<ResponsiveModal open={!!promise} onOpenChange={handleClose}>
-			<Card>
+			<Card className='rounded-t-none rounded-b-none mt-4'>
 				<CardContent>
 					<CardHeader>
 						<CardTitle>{title}</CardTitle>
