@@ -12,6 +12,7 @@ import {
 import { ID, Query } from 'node-appwrite';
 import { createAdminClient } from '@/appwrite/appwrite';
 import { Project } from '@/appwrite/projects/types';
+import { Task } from '../types';
 const app = new Hono()
 	.get(
 		'/',
@@ -58,7 +59,11 @@ const app = new Hono()
 				console.log('search: ', search);
 				query.push(Query.search('search', search));
 			}
-			const tasks = await databases.listDocuments(DATABASE_ID, TASKS_ID, query);
+			const tasks = await databases.listDocuments<Task>(
+				DATABASE_ID,
+				TASKS_ID,
+				query
+			);
 
 			const projectIds = tasks.documents.map((task) => task.projectId);
 			const assigneeIds = tasks.documents.map((task) => task.assigneeId);

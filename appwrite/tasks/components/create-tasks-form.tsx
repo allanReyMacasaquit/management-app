@@ -182,7 +182,7 @@ function CreateTaskForm({
 																className='size-6'
 																name={member.name}
 															/>
-															{member.name}
+															<span className='capitalize'>{member.name}</span>
 														</div>
 													</SelectItem>
 												))}
@@ -226,7 +226,7 @@ function CreateTaskForm({
 												<SelectItem value={TaskStatus.DONE}>
 													<div className='flex items-center'>
 														<CheckCircle className='text-green-500' />
-														<span className='ml-2'>Done</span>
+														<span className='ml-2'>DONE</span>
 													</div>
 												</SelectItem>
 												<SelectItem value={TaskStatus.IN_REVIEW}>

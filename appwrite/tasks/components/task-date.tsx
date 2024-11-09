@@ -1,0 +1,44 @@
+import { cn } from '@/lib/utils';
+import { differenceInDays, format } from 'date-fns';
+import { AlertCircle, LucideCheckCircle } from 'lucide-react';
+
+interface TaskDateProps {
+	value: string;
+	className?: string;
+}
+
+function TaskDate({ value, className }: TaskDateProps) {
+	const today = new Date();
+	const endDate = new Date(value);
+	const diffInDays = differenceInDays(endDate, today);
+
+	// Set textColor class based on the days difference
+	let textColor =
+		'text-green-500 hover:bg-green-200 w-40 lg:w-fit bg-green-50 rounded-lg p-2';
+
+	if (diffInDays <= 3) {
+		textColor =
+			'text-red-500 bg-red-50 hover:bg-red-200 w-40 lg:w-fit rounded-lg p-2';
+	} else if (diffInDays <= 7) {
+		textColor =
+			'text-orange-500 bg-orange-50 hover:bg-orange-200 w-40 lg:w-fit rounded-lg p-2';
+	} else if (diffInDays <= 14) {
+		textColor =
+			'text-yellow-500 bg-yellow-50 hover:bg-yellow-200 w-40 lg:w-fit rounded-lg p-2';
+	}
+
+	return (
+		<div className={cn(textColor, className)}>
+			<span className='truncate flex items-center'>
+				{diffInDays <= 3 ? (
+					<AlertCircle className='mr-2' />
+				) : (
+					<LucideCheckCircle className='mr-2' />
+				)}
+				{format(endDate, 'PPP')}
+			</span>
+		</div>
+	);
+}
+
+export default TaskDate;

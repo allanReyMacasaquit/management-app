@@ -9,6 +9,8 @@ import { useWorkspaceId } from '@/appwrite/workspaces/hooks/use-workspace-id';
 import { useQueryState } from 'nuqs';
 import DataFilters from './data-filters';
 import useFilterTasks from '../hooks/use-filter-tasks';
+import { DataTable } from './data-table';
+import { columns } from './columns';
 
 function TaskViewSwitcher() {
 	const [{ assigneeId, dueDate, projectId, status }] = useFilterTasks();
@@ -32,7 +34,7 @@ function TaskViewSwitcher() {
 			className='w-full flex-1 border rounded-lg'
 		>
 			<div className='h-full flex flex-col overflow-auto p-4'>
-				<div className='flex flex-col gap-y-2 lg:flex-row justify-between'>
+				<div className='flex items-center gap-y-2 lg:flex-row justify-between'>
 					<TabsList className='w-full lg:w-auto'>
 						<TabsTrigger value='table' className='w-full h-8 lg:w-auto'>
 							Table
@@ -44,15 +46,17 @@ function TaskViewSwitcher() {
 							Calendar
 						</TabsTrigger>
 					</TabsList>
-					<Button
-						onClick={open}
-						variant='primary'
-						size='sm'
-						className='lg:w-fit rounded-full'
-					>
-						<PlusIcon className='size-5 ' />
-						New
-					</Button>
+					<div className='flex justify-end my-2 ml-2'>
+						<Button
+							onClick={open}
+							variant='primary'
+							size='sm'
+							className='w-fit rounded-full'
+						>
+							<PlusIcon className='size-5' />
+							New Task
+						</Button>
+					</div>
 				</div>
 				<Separator className='bg-white my-4' />
 				<DataFilters hideProjectFilter={false} />
@@ -65,7 +69,7 @@ function TaskViewSwitcher() {
 				) : (
 					<>
 						<TabsContent value='table'>
-							Data table {JSON.stringify(tasks)}
+							<DataTable columns={columns} data={tasks?.documents ?? []} />
 						</TabsContent>
 						<TabsContent value='kanban'>
 							Data kanban {JSON.stringify(tasks)}
