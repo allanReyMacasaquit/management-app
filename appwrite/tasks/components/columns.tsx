@@ -8,6 +8,7 @@ import MemberAvatar from '@/appwrite/members/components/member-avatar';
 import TaskDate from './task-date';
 import StatusBadgeWithActions from './status-badge-with-actions';
 import { ArrowUpDown } from 'lucide-react';
+import NameAvatar from './name-avatar';
 
 export const columns: ColumnDef<Task>[] = [
 	{
@@ -15,66 +16,26 @@ export const columns: ColumnDef<Task>[] = [
 		header: ({ column }) => {
 			return (
 				<Button
-					variant='ghost'
+					variant='secondary'
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
-					Name:
-					<ArrowUpDown className='ml-2 size-4' />
-				</Button>
-			);
-		},
-	},
-
-	{
-		accessorKey: 'assigneeId',
-		header: ({ column }) => {
-			return (
-				<Button
-					variant='ghost'
-					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-				>
-					Assignee
+					Task:
 					<ArrowUpDown className='ml-2 size-4' />
 				</Button>
 			);
 		},
 		cell: ({ row }) => {
-			const assignee = row.original.assignee;
+			const name = row.original.name;
 			return (
-				<div className='flex items-center gap-x-2 text-sm font-medium'>
-					<MemberAvatar
-						name={assignee.name}
+				<div className='flex items-center lg: justify-center gap-x-2 text-sm font-medium'>
+					<NameAvatar
+						name={name}
 						fallbackClassName='text-sm'
-						className='size-6'
+						className='size-6 justify-start hidden lg:flex'
 					/>
-					<p className='line-clamp-1'>{assignee.name}</p>
-				</div>
-			);
-		},
-	},
-	{
-		accessorKey: 'projectId',
-		header: ({ column }) => {
-			return (
-				<Button
-					variant='ghost'
-					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-				>
-					Project
-					<ArrowUpDown className='ml-2 size-4' />
-				</Button>
-			);
-		},
-		cell: ({ row }) => {
-			const project = row.original.project;
-			return (
-				<div className='flex items-center gap-x-2 text-sm font-medium'>
-					<ProjectAvatar
-						name={project.name}
-						image={project.imageUrl}
-						className='size-6'
-					/>
-					<p className='line-clamp-1'>{project.name}</p>
+					<p className='p-2 tracking-widest w-[320px] lg:w-[520px] rounded bg-slate-50'>
+						{name}
+					</p>
 				</div>
 			);
 		},
@@ -83,7 +44,7 @@ export const columns: ColumnDef<Task>[] = [
 		accessorKey: 'status',
 		header: ({ column }) => (
 			<Button
-				variant='ghost'
+				variant='secondary'
 				onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 			>
 				Status
@@ -107,7 +68,7 @@ export const columns: ColumnDef<Task>[] = [
 		header: ({ column }) => {
 			return (
 				<Button
-					variant='ghost'
+					variant='secondary'
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					Due Date
@@ -118,6 +79,60 @@ export const columns: ColumnDef<Task>[] = [
 		cell: ({ row }) => {
 			const dueDate = row.original.dueDate;
 			return <TaskDate value={dueDate} />;
+		},
+	},
+	{
+		accessorKey: 'assigneeId',
+		header: ({ column }) => {
+			return (
+				<Button
+					variant='secondary'
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+				>
+					Assignee
+					<ArrowUpDown className='ml-2 size-4' />
+				</Button>
+			);
+		},
+		cell: ({ row }) => {
+			const assignee = row.original.assignee;
+			return (
+				<div className='flex items-center w-[320px] lg:w-full gap-x-2 text-sm font-medium'>
+					<MemberAvatar
+						name={assignee.name}
+						fallbackClassName='text-sm'
+						className='size-6'
+					/>
+					<p className='line-clamp-1'>{assignee.name}</p>
+				</div>
+			);
+		},
+	},
+	{
+		accessorKey: 'projectId',
+		header: ({ column }) => {
+			return (
+				<Button
+					variant='secondary'
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+				>
+					Project
+					<ArrowUpDown className='ml-2 size-4' />
+				</Button>
+			);
+		},
+		cell: ({ row }) => {
+			const project = row.original.project;
+			return (
+				<div className='flex items-center w-[320px] lg:w-full gap-x-2 text-sm font-medium'>
+					<ProjectAvatar
+						name={project.name}
+						image={project.imageUrl}
+						className='size-6'
+					/>
+					<p className='line-clamp-1'>{project.name}</p>
+				</div>
+			);
 		},
 	},
 ];

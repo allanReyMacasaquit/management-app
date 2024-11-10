@@ -2,8 +2,8 @@
 
 import ResponsiveModal from '@/components/modals/responsive-modal';
 
-import useCreateTasksModal from '../hooks/use-create-tasks-modal';
 import CreateTasksFormWrapper from './create-tasks-form-wrapper';
+import useCreateTasksModal from '../../hooks/use-create-tasks-modal';
 
 function CreateTasksModal() {
 	const { isOpen, setIsOpen, close } = useCreateTasksModal();

@@ -15,8 +15,8 @@ function StatusBadgeWithActions({
 	projectId,
 }: StatusBadgeWithActionsProps) {
 	return (
-		<div className='relative w-40 lg:full'>
-			<div className='cursor-pointer'>
+		<div className='relative w-[320px]'>
+			<div className='cursor-pointer tracking-widest'>
 				<StatusBadge status={status} />
 				<div className='absolute top-1 right-0'>
 					<TaskActions id={id} projectId={projectId}>

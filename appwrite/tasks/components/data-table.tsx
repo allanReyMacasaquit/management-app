@@ -90,7 +90,7 @@ export function DataTable<TData, TValue>({
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
 						align='end'
-						className='rounded-full h-7 flex items-center '
+						className='rounded h-auto flex items-center w-80 lg:w-full overflow-x-auto '
 					>
 						{table
 							.getAllColumns()
