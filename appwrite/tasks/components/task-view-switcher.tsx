@@ -11,6 +11,7 @@ import DataFilters from './data-filters';
 import useFilterTasks from '../hooks/use-filter-tasks';
 import { DataTable } from './data-table';
 import { columns } from './columns';
+import DataKanban from './kanban/data-kanban';
 
 function TaskViewSwitcher() {
 	const [{ assigneeId, dueDate, projectId, status }] = useFilterTasks();
@@ -72,7 +73,7 @@ function TaskViewSwitcher() {
 							<DataTable columns={columns} data={tasks?.documents ?? []} />
 						</TabsContent>
 						<TabsContent value='kanban'>
-							Data kanban {JSON.stringify(tasks)}
+							<DataKanban data={tasks?.documents ?? []} />
 						</TabsContent>
 						<TabsContent value='calendar'>
 							Data calendar {JSON.stringify(tasks)}

@@ -1,6 +1,5 @@
 import { client } from '@/lib/hono-client';
 import { useQuery } from '@tanstack/react-query';
-import { TaskStatus } from '../types';
 
 interface useGetTaskProps {
 	taskId: string;

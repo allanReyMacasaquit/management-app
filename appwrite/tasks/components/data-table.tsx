@@ -75,7 +75,7 @@ export function DataTable<TData, TValue>({
 						onChange={(event) =>
 							table.getColumn('name')?.setFilterValue(event.target.value)
 						}
-						className='w-full lg:max-w-fit capitalize hover:bg-slate-100 bg-slate-200 transition'
+						className='w-full lg:max-w-fit capitalize bg-white transition'
 					/>
 				</div>
 				<DropdownMenu>
