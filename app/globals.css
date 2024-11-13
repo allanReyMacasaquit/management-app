@@ -71,3 +71,64 @@ root {
 		--chart-5: 340 75% 55%;
 	}
 }
+
+.rbc-month-row {
+	@apply min-h-32 lg:min-h-60 text-sm font-normal pb-4 text-muted-foreground border-b-0;
+}
+
+/* Calendar container */
+.rbc-calendar {
+	@apply bg-gradient-to-br from-blue-50 to-indigo-50 text-gray-900 p-4 rounded-lg shadow-md;
+}
+
+/* Toolbar (navigation, date selection, view options) */
+.rbc-toolbar {
+	@apply flex items-center justify-between bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-3 rounded-lg mb-4 shadow-lg;
+}
+
+.rbc-toolbar button {
+	@apply bg-white text-indigo-600 font-semibold px-3 py-1 rounded-md hover:bg-indigo-200 transition duration-200 shadow-sm;
+}
+
+/* Header (days of the week) */
+.rbc-month-view .rbc-header {
+	@apply bg-indigo-100 text-indigo-700 font-semibold p-2 border-b border-indigo-300;
+}
+
+/* Today’s date cell */
+.rbc-today {
+	@apply bg-orange-200 border border-orange-500 ring-2 ring-orange-400 shadow-lg shadow-orange-500;
+}
+
+/* Event */
+.rbc-event {
+	@apply bg-inherit opacity-75 hover:opacity-100 transition;
+}
+
+/* Selected event */
+.rbc-selected {
+	@apply bg-orange-500 shadow-lg;
+}
+
+/* Month view grid cells */
+.rbc-month-view .rbc-date-cell {
+	@apply p-2 border-gray-200 rounded shadow-md shadow-gray-300 hover:bg-indigo-100 transition duration-200 ease-in-out;
+}
+
+/* Hover effect for individual date cells */
+.rbc-month-view .rbc-date-cell:hover {
+	@apply shadow transform transition duration-200 ease-in-out;
+}
+
+/* Agenda view table */
+.rbc-agenda-view table {
+	@apply w-full border-collapse border border-gray-300 rounded-lg shadow-md;
+}
+
+.rbc-agenda-view thead {
+	@apply bg-indigo-200 text-indigo-700;
+}
+
+.rbc-agenda-view tbody > tr {
+	@apply border-t border-gray-200 hover:bg-indigo-50 transition duration-150;
+}

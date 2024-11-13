@@ -31,8 +31,12 @@ export const useBulkUpdateTasks = () => {
 
 			return (await response.json()) as ResponseType;
 		},
-		onSuccess: () => {
-			toast.success(`Task Status Moved ${task.}`);
+		onSuccess: ({ data }) => {
+			if (data && data.length > 0) {
+				const statusName = data[0].status;
+				toast.success(`Task Status Moved to ${statusName}`);
+			}
+
 			queryClient.invalidateQueries({
 				queryKey: ['tasks'],
 			});
