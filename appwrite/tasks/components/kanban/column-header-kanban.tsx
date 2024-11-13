@@ -3,12 +3,9 @@ import {
 	CheckCircle,
 	ClipboardList,
 	Eye,
-	PlusIcon,
 	RefreshCcw,
 } from 'lucide-react';
 import { TaskStatus } from '../../types';
-import { Button } from '@/components/ui/button';
-import useCreateTasksModal from '../../hooks/use-create-tasks-modal';
 
 interface ColumnHeaderKanbanProps {
 	board: TaskStatus;
@@ -27,7 +24,7 @@ const statusIconMap: Record<TaskStatus, React.ReactNode> = {
 function ColumnHeaderKanban({ board, taskCount }: ColumnHeaderKanbanProps) {
 	const icon = statusIconMap[board];
 	return (
-		<div className='flex w-[320px] lg:w-full items-center justify-between '>
+		<div className='flex w-[320px] lg:w-full items-center bg-blue-200 p-2 justify-between '>
 			<div className='flex items-center gap-x-2'>
 				<div>{icon}</div>
 				<h2 className='text-sm'>{board}</h2>

@@ -19,17 +19,17 @@ function TaskDate({ value, className }: TaskDateProps) {
 
 	// Set textColor class based on the days difference
 	let textColor =
-		'text-green-500 hover:bg-green-200 bg-green-50 w-[320px] lg:w-fit rounded-lg p-2';
+		'text-green-500 hover:bg-green-200 bg-green-50 w-[320px] lg:w-full rounded-lg p-2';
 
 	if (diffInDays <= 3) {
 		textColor =
-			'text-red-500 bg-red-50 w-[320px] lg:w-fit  hover:bg-red-200 rounded-lg p-2';
+			'text-red-500 bg-red-50 w-[320px] w-full lg:w-full hover:bg-red-200 rounded-lg p-2';
 	} else if (diffInDays <= 7) {
 		textColor =
-			'text-orange-500 bg-orange-50 w-[320px] lg:w-fit  hover:bg-orange-200 rounded-lg p-2';
+			'text-orange-500 bg-orange-50 w-[320px] lg:w-full hover:bg-orange-200 rounded-lg p-2';
 	} else if (diffInDays <= 14) {
 		textColor =
-			'text-yellow-500 bg-yellow-50 w-[320px] lg:w-fit hover:bg-yellow-200 rounded-lg p-2';
+			'text-yellow-500 bg-yellow-50 w-[320px] lg:w-full hover:bg-yellow-200 rounded-lg p-2';
 	}
 
 	return (
